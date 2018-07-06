@@ -1,5 +1,6 @@
 package com.leedh.garachico.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * Date: 2018-07-07
  */
 
+@Slf4j
 @Controller
 public class IndexController {
 
@@ -18,6 +20,7 @@ public class IndexController {
      */
     @GetMapping("/")
     public String index() {
+        log.debug("index");
         return "index";
     }
 }
