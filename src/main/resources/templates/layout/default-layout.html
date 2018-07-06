@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!--
+기본 레이아웃 설정
+-->
+<head>
+    <title layout:title-pattern="$CONTENT_TITLE :: $DECORATOR_TITLE">카카오뱅크 코딩 테스트</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!--jQuery-->
+    <script
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous"></script>
+
+    <!--jQuery Confirm v3-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.js"></script>
+
+    <script>
+        /*jQuery Confirm 기본 설정*/
+        jconfirm.defaults ={
+            boxWidth: '50%',
+            useBootstrap: false
+        };
+    </script>
+
+    <link rel="stylesheet" th:href="@{css/styles.css}">
+    <script th:src="@{js/common.js}"></script>
+
+</head>
+<body>
+<header layout:fragment="header">
+    <h1>기본헤더 입니다.</h1>
+</header>
+<section layout:fragment="content">
+    <p>Layout Content</p>
+</section>
+<footer layout:fragment="footer">
+    <p>banco de kakao</p>
+</footer>
+
+
+</body>
+</html>
