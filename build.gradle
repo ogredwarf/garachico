@@ -31,6 +31,7 @@ repositories {
 
 
 ext {
+    feignVersion = '9.7.0'
     springCloudVersion = 'Finchley.RELEASE'
 }
 
@@ -46,18 +47,27 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-openfeign')
     compile('org.springframework.session:spring-session-core')
     runtime('org.springframework.boot:spring-boot-devtools')
+
+    /*util*/
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    compile 'com.google.code.gson:gson:2.8.5' /*2018.07.07 기준 많이 사용*/
+
+    /*Feign*/
+    compile("io.github.openfeign:feign-gson:$feignVersion") {
+        exclude group: 'com.google.code.gson'
+    }
+
+    compile "io.github.openfeign:feign-httpclient:$feignVersion"
+    compile "io.github.openfeign:feign-slf4j:$feignVersion"
+
     /*runtime('com.h2database:h2')*/
     compile('com.h2database:h2')
     compileOnly('org.projectlombok:lombok')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
 
-    /*thymeleaf-lagacy html5*/
+    /*thymeleaf*/
     compile('net.sourceforge.nekohtml:nekohtml')
-    compile('net.sourceforge.nekohtml:nekohtml')
-
-    /*util*/
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0'
 
     /*log*/
