@@ -7,21 +7,26 @@
     <meta charset="UTF-8">
     <title>책조회</title>
     <style>
-        .wrapper {
+        .condition {
             display: grid;
-            grid-template-columns: 140px 1fr;
+            grid-template-columns: 1fr 1fr;
         }
 
-        .label {
-            text-align: right;
-            padding: 6px 20px;
-            margin: 8px 0;
+        label>span {
+            font-size: 17px;
+            font-weight: bold;
+            width: 120px;
+            display: inline-block;
         }
 
-        .contents {
-            margin: 0;
-            padding: 0 20px;
+        div.condition div  {
+            padding: 0 12px;
         }
+
+        button.find {
+            text-align: center;
+        }
+
     </style>
 
     <script>
@@ -34,62 +39,47 @@
 </header>
 <section layout:fragment="content">
 
-    <div>
-        <div class="contents">
-            <label data-th-for="query"><b>검색어</b></label>
-            <input type="text" placeholder="find..." name="query" required>
-        </div>
-    </div>
-</section>
+    <div class="condition">
 
-
-<!--<form id="form_condition">
-    <div class="wrapper">
-
-        <div class="label"> <label data-th-for="query"><b>검색어</b></label></div>
-        <div class="contents">
-            <input type="text" placeholder="find..." name="query" required>
-        </div>
-
-        <div class="label">
-            <label data-th-for="sort"><b>정렬순서</b></label>
-        </div>
-        <div class="contents">
-
+        <div>
+            <label data-th-for="sort"><span>정렬순서</span></label>
             <select data-th-name="sort">
-                <option data-th-each=" item:${T(com.leedh.excercise.books.common.enums.SortType).values()}"
+                <option data-th-each="item:${T(com.leedh.garachico.enums.Sort).values()}"
                         data-th-value="${item.code}"
                         data-th-text="${item.desc}"
                 ></option>
             </select>
         </div>
-
-        <div class="label"><label data-th-for="category"><b>책구분</b></label></div>
-        <div class="contents">
+        <div>
+            <label data-th-for="category"><span>책구분</span></label>
             <select data-th-name="category">
-                <option data-th-each=" item:${T(com.leedh.excercise.books.common.enums.Category).values()}"
+                <option data-th-each="item:${T(com.leedh.garachico.enums.Category).values()}"
                         data-th-value="${item.code}"
                         data-th-text="${item.desc}"
                 ></option>
             </select>
         </div>
-
-        <div class="label"><label data-th-for="target"><b>범위</b></label></div>
-        <div class="contents">
+        <div>
+            <label data-th-for="target"><span>범위</span></label>
             <select data-th-name="target">
-                <option data-th-each=" item:${T(com.leedh.excercise.books.common.enums.Target).values()}"
+                <option data-th-each=" item:${T(com.leedh.garachico.enums.Target).values()}"
                         data-th-value="${item.code}"
                         data-th-text="${item.desc}"
                 ></option>
             </select>
         </div>
+        <div></div>
+        <div>
+            <label data-th-for="query"><span>검색어</span></label>
+            <input type="text" placeholder="find..." name="query" style="width: 200px" required>
+        </div>
+        <div>
+            <button class="find"> 테스트 </button>
+        </div>
+    </div>
 
 
-    </div>
-    <div>
-        <button id="btnSearch">검색</button>
-    </div>
-</form>-->
+</section>
 
 </body>
 </html>
