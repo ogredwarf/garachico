@@ -37,7 +37,7 @@ public class MemberRepositoryTest {
     }
 
     @Test
-    public void jpaTest() throws Exception {
+    public void testMemberRepository() throws Exception {
 
         BCryptPasswordEncoder cryptPasswordEncoder = new BCryptPasswordEncoder();
 
@@ -47,10 +47,8 @@ public class MemberRepositoryTest {
                 .userId(userId)
                 .pswd(passwd)
                 .build());
-        //when
         List<Member> memberList = memberRepository.findAll();
 
-        //then
         Member member = memberList.get(0);
         assertThat(member.getUserId(), is(userId));
         assertThat(member.getPassword(), is(passwd));

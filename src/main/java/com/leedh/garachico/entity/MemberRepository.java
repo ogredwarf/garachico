@@ -3,6 +3,7 @@ package com.leedh.garachico.entity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
+ * MemberRepository
  * project: garachico
  * User: 이동훈
  * Date: 2018-07-07
