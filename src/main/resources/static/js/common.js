@@ -18,7 +18,7 @@ $.fn.serializeObject = function () {
 
 /*공통*/
 var common = {};
-$.extend( cm,{
+$.extend( common,{
     /**
      * 회원 가입 페이지 이동
      */
