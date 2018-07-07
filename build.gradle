@@ -54,10 +54,11 @@ dependencies {
 
     /*thymeleaf-lagacy html5*/
     compile('net.sourceforge.nekohtml:nekohtml')
+    compile('net.sourceforge.nekohtml:nekohtml')
 
     /*util*/
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-    compile 'commons-io:commons-io:2.5'
+    compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0'
 
     /*log*/
     compile 'ch.qos.logback:logback-classic:1.2.2'

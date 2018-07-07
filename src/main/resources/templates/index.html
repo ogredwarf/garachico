@@ -5,11 +5,91 @@
       layout:decorator="layout/template_default">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>책조회</title>
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+        }
+
+        .label {
+            text-align: right;
+            padding: 6px 20px;
+            margin: 8px 0;
+        }
+
+        .contents {
+            margin: 0;
+            padding: 0 20px;
+        }
+    </style>
+
+    <script>
+
+    </script>
 </head>
 <body>
+<header layout:fragment="header">
+    <h1>책 검색</h1>
+</header>
 <section layout:fragment="content">
-    기본 페이지 입니다.
+
+    <div>
+        <div class="contents">
+            <label data-th-for="query"><b>검색어</b></label>
+            <input type="text" placeholder="find..." name="query" required>
+        </div>
+    </div>
 </section>
+
+
+<!--<form id="form_condition">
+    <div class="wrapper">
+
+        <div class="label"> <label data-th-for="query"><b>검색어</b></label></div>
+        <div class="contents">
+            <input type="text" placeholder="find..." name="query" required>
+        </div>
+
+        <div class="label">
+            <label data-th-for="sort"><b>정렬순서</b></label>
+        </div>
+        <div class="contents">
+
+            <select data-th-name="sort">
+                <option data-th-each=" item:${T(com.leedh.excercise.books.common.enums.SortType).values()}"
+                        data-th-value="${item.code}"
+                        data-th-text="${item.desc}"
+                ></option>
+            </select>
+        </div>
+
+        <div class="label"><label data-th-for="category"><b>책구분</b></label></div>
+        <div class="contents">
+            <select data-th-name="category">
+                <option data-th-each=" item:${T(com.leedh.excercise.books.common.enums.Category).values()}"
+                        data-th-value="${item.code}"
+                        data-th-text="${item.desc}"
+                ></option>
+            </select>
+        </div>
+
+        <div class="label"><label data-th-for="target"><b>범위</b></label></div>
+        <div class="contents">
+            <select data-th-name="target">
+                <option data-th-each=" item:${T(com.leedh.excercise.books.common.enums.Target).values()}"
+                        data-th-value="${item.code}"
+                        data-th-text="${item.desc}"
+                ></option>
+            </select>
+        </div>
+
+
+    </div>
+    <div>
+        <button id="btnSearch">검색</button>
+    </div>
+</form>-->
+
 </body>
 </html>
