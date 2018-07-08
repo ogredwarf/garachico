@@ -1,0 +1,10 @@
+<div data-th-text="${result.meta.totalCount}"> TEST LIST1 </div>
+<table>
+    <tbody>
+        <tr data-th-each="iter : ${result.documents}">
+            <td data-th-text="${iter.title}">Title </td>
+            <td data-th-text="${iter.isbn}">isbn </td>
+            <td data-th-text="${iter.publisher}">publisher </td>
+        </tr>
+    </tbody>
+</table>

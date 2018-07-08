@@ -12,25 +12,69 @@
             grid-template-columns: 1fr 1fr;
         }
 
-        label>span {
+        label > span {
             font-size: 17px;
             font-weight: bold;
             width: 120px;
             display: inline-block;
         }
 
-        div.condition div  {
+        div.condition div {
             padding: 0 12px;
-        }
-
-        button.find {
-            text-align: center;
         }
 
     </style>
 
     <script>
+        var book = {};
+        $.extend(book, {
+            lastSrchCondition: {},
 
+            findBook: function (page) {
+
+                var param = $('#search_condition').serializeObject();
+                param.page = page | 1;
+                $('button.find').prop("disabled", true);
+                $.post('/book/getList', param, function (data) {
+                    console.log(data);
+                    $('#list-contents').html(data);
+                }, 'html')
+                    .always(function () {
+                        $('button.find').prop("disabled", false);
+                    })
+                ;
+            }
+        });
+
+        $(function () {
+
+            /**
+             * 이벤트 설정
+             */
+            $('button.find').click(function (e) {
+                e.preventDefault();
+
+                book.findBook(1);
+
+                /*$.post('/book/v1/find2', param)
+                    .done(function (data) {
+
+                        if (data.meta) {
+                            $.alert("total_count: " + data.meta.totalCount);
+                        }
+                        else {
+                            $.alert("result:" + JSON.stringify(data));
+                        }
+                    })
+                    .fail(function () {
+                        $.alert("fail");
+                    })
+                    .always(function () {
+                        $('button.find').prop("disabled", false);
+                    })
+                ;*/
+            });
+        });
     </script>
 </head>
 <body>
@@ -39,47 +83,55 @@
 </header>
 <section layout:fragment="content">
 
-    <div class="condition">
+    <form id="search_condition" method="post">
+        <div class="condition">
 
-        <div>
-            <label data-th-for="sort"><span>정렬순서</span></label>
-            <select data-th-name="sort">
-                <option data-th-each="item:${T(com.leedh.garachico.enums.Sort).values()}"
-                        data-th-value="${item.code}"
-                        data-th-text="${item.desc}"
-                ></option>
-            </select>
+            <div>
+                <label data-th-for="query"><span>검색어</span></label>
+                <input type="text" placeholder="find..." name="query" style="width: 200px" required>
+            </div>
+            <div>
+                <label data-th-for="sort"><span>정렬순서</span></label>
+                <select data-th-name="sort">
+                    <option data-th-each="item:${T(com.leedh.garachico.enums.Sort).values()}"
+                            data-th-value="${item.code}"
+                            data-th-text="${item.desc}"
+                    ></option>
+                </select>
+            </div>
+            <div>
+                <label data-th-for="category"><span>책구분</span></label>
+                <select data-th-name="category">
+                    <option data-th-each="item:${T(com.leedh.garachico.enums.Category).values()}"
+                            data-th-value="${item.code}"
+                            data-th-text="${item.desc}"
+                    ></option>
+                </select>
+            </div>
+            <div>
+                <label data-th-for="target"><span>범위</span></label>
+                <select data-th-name="target">
+                    <option data-th-each=" item:${T(com.leedh.garachico.enums.Target).values()}"
+                            data-th-value="${item.code}"
+                            data-th-text="${item.desc}"
+                    ></option>
+                </select>
+            </div>
+            <div></div>
+
+            <div>
+                <button class="find"> 테스트</button>
+            </div>
         </div>
-        <div>
-            <label data-th-for="category"><span>책구분</span></label>
-            <select data-th-name="category">
-                <option data-th-each="item:${T(com.leedh.garachico.enums.Category).values()}"
-                        data-th-value="${item.code}"
-                        data-th-text="${item.desc}"
-                ></option>
-            </select>
+        <div id="list-contents">
+
         </div>
-        <div>
-            <label data-th-for="target"><span>범위</span></label>
-            <select data-th-name="target">
-                <option data-th-each=" item:${T(com.leedh.garachico.enums.Target).values()}"
-                        data-th-value="${item.code}"
-                        data-th-text="${item.desc}"
-                ></option>
-            </select>
-        </div>
-        <div></div>
-        <div>
-            <label data-th-for="query"><span>검색어</span></label>
-            <input type="text" placeholder="find..." name="query" style="width: 200px" required>
-        </div>
-        <div>
-            <button class="find"> 테스트 </button>
-        </div>
-    </div>
+    </form>
 
 
 </section>
+<section>
+    TEST
+</section>
 
-</body>
 </html>
