@@ -47,6 +47,7 @@ public class MemberRepositoryTest {
                 .userId(userId)
                 .pswd(passwd)
                 .build());
+
         List<Member> memberList = memberRepository.findAll();
 
         Member member = memberList.get(0);

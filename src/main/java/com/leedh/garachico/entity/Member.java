@@ -2,6 +2,7 @@ package com.leedh.garachico.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
@@ -35,7 +36,10 @@ public class Member {
     private String password;
 
     @UpdateTimestamp
-    private Timestamp regDt;
+    private Timestamp lastModifyDt;
+
+    @CreationTimestamp
+    private Timestamp createDt;
 
     @Builder
     public Member(String userId, String pswd ) {

@@ -7,6 +7,10 @@ import feign.Client;
 import feign.Feign;
 import feign.Logger;
 import feign.Request;
+import feign.codec.Decoder;
+import feign.codec.Encoder;
+import feign.gson.GsonDecoder;
+import feign.gson.GsonEncoder;
 import feign.httpclient.ApacheHttpClient;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpRequestInterceptor;
@@ -73,7 +77,7 @@ public class KakaoApiFeignConfig {
         return new ApacheHttpClient(builder.build());
     }
 
-    /*@Bean
+    @Bean
     public Decoder decoder() {
         return new GsonDecoder(gson);
     }
@@ -81,7 +85,7 @@ public class KakaoApiFeignConfig {
     @Bean
     public Encoder encoder() {
         return new GsonEncoder(gson);
-    }*/
+    }
 
     @Bean
     public Request.Options options() {
