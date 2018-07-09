@@ -26,24 +26,45 @@
     </style>
 
     <script>
-        var book = {};
-        $.extend(book, {
-            lastSrchCondition: {},
+        var srchBook = {};
+        $.extend(srchBook, {
+            lastCondition : null,
+            /* 책 검색 */
+            find: function (page, param ) {
 
-            findBook: function (page) {
+                /* 조회조건이 없으면 form에서 조회조건을 가져옴*/
+                if( !param ){
+                    param = $('#search_condition').serializeObject();
+                }
 
-                var param = $('#search_condition').serializeObject();
+
+                $('#list-contents').html('');
                 param.page = page | 1;
+
+                /* 검색어가 없는 경우 에러 메시지 출력 */
+                if( !param.query ){
+
+                    $.alert("검색어는 필수 입력 값입니다. 검색어를 입력하여 주세요.");
+                    return false;
+                }
+
+                /* 최종 기록 저장 */
+                srchBook.lastCondition = param;
                 $('button.find').prop("disabled", true);
-                $.post('/book/getList', param, function (data) {
-                    console.log(data);
-                    $('#list-contents').html(data);
-                }, 'html')
+                $.post('/book/getList', param, function (data) {}, 'html')
+                    .done(function (data) {
+                        $('#list-contents').html(data);
+                    })
                     .always(function () {
                         $('button.find').prop("disabled", false);
                     })
                 ;
+            },
+            /* Page 이동 */
+            goPage: function (page) {
+                srchBook.find(page, srchBook.lastCondition );
             }
+
         });
 
         $(function () {
@@ -53,26 +74,7 @@
              */
             $('button.find').click(function (e) {
                 e.preventDefault();
-
-                book.findBook(1);
-
-                /*$.post('/book/v1/find2', param)
-                    .done(function (data) {
-
-                        if (data.meta) {
-                            $.alert("total_count: " + data.meta.totalCount);
-                        }
-                        else {
-                            $.alert("result:" + JSON.stringify(data));
-                        }
-                    })
-                    .fail(function () {
-                        $.alert("fail");
-                    })
-                    .always(function () {
-                        $('button.find').prop("disabled", false);
-                    })
-                ;*/
+                srchBook.find(1);
             });
         });
     </script>
@@ -83,9 +85,8 @@
 </header>
 <section layout:fragment="content">
 
-    <form id="search_condition" method="post">
+    <form id="search_condition" method="post" onsubmit="return book.find();">
         <div class="condition">
-
             <div>
                 <label data-th-for="query"><span>검색어</span></label>
                 <input type="text" placeholder="find..." name="query" style="width: 200px" required>
