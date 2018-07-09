@@ -51,7 +51,7 @@
                 /* 최종 기록 저장 */
                 srchBook.lastCondition = param;
                 $('button.find').prop("disabled", true);
-                $.post('/book/getList', param, function (data) {}, 'html')
+                $.post('/book/list', param, function (data) {}, 'html')
                     .done(function (data) {
                         $('#list-contents').html(data);
                     })
@@ -60,9 +60,15 @@
                     })
                 ;
             },
+            
             /* Page 이동 */
             goPage: function (page) {
                 srchBook.find(page, srchBook.lastCondition );
+            },
+            
+            goDetail: function ( isbn ) {
+                var param = {};
+                param.detail = isbn;
             }
 
         });
@@ -85,7 +91,7 @@
 </header>
 <section layout:fragment="content">
 
-    <form id="search_condition" method="post" onsubmit="return book.find();">
+    <form id="search_condition" method="post" onsubmit="return book.find(1);">
         <div class="condition">
             <div>
                 <label data-th-for="query"><span>검색어</span></label>
@@ -114,8 +120,8 @@
                 <select data-th-name="target">
                     <option data-th-each=" item:${T(com.leedh.garachico.enums.Target).values()}"
                             data-th-value="${item.code}"
-                            data-th-text="${item.desc}"
-                    ></option>
+                            data-th-text="${item.desc}">
+                    </option>
                 </select>
             </div>
             <div></div>
@@ -130,9 +136,6 @@
     </form>
 
 
-</section>
-<section>
-    TEST
 </section>
 
 </html>

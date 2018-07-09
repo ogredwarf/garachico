@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/template_default">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section layout:fragment="content">
+    <div data-th-unless="${#lists.isEmpty(result.documents)}">
+        <div data-th-with="item=${result.documents[0]}">
+            <div>
+                <a data-th-href="@{'/book/detail/' + ${#strings.arraySplit(item.isbn,' ')[0]}}"> <!--isbn 한가지만 -->
+                    <span class="title" data-th-utext="${item.title}" >Title</span> <!--escape 문자를 해결-->
+                </a>
+            </div>
+            <div class="book-summary">
+                <ul>
+                    <li data-th-unless="${#lists.isEmpty(item.authors)}">       <span data-th-name="authors" data-th-text="${#strings.listJoin(item.authors, ',')}">authors</span> 저</li>
+                    <li data-th-unless="${#lists.isEmpty(item.translators)}">   <span data-th-name="translators" data-th-text="${#strings.listJoin(item.translators, ',')}">translators</span> 역</li>
+                    <li data-th-unless="${#lists.isEmpty(item.publisher)}">     <span data-th-name="publisher" data-th-text="${item.publisher}">publisher</span></li>
+                </ul>
+            </div>
+            <div style="display: block"> <span data-th-text="${item.price}">authors</span> 원</div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
