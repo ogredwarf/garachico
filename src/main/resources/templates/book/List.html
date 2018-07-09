@@ -1,10 +1,89 @@
-<div data-th-text="${result.meta.totalCount}"> TEST LIST1 </div>
-<table>
-    <tbody>
-        <tr data-th-each="iter : ${result.documents}">
-            <td data-th-text="${iter.title}">Title </td>
-            <td data-th-text="${iter.isbn}">isbn </td>
-            <td data-th-text="${iter.publisher}">publisher </td>
+<style type="text/css">
+    table.list {
+        width: 100%;
+        padding: 0 5px;
+    }
+    table.list button {
+        display: inline-block;
+        padding: 2px 20px;
+        margin: 8px 0;
+        border: 1px solid #cccccc;
+        cursor: pointer;
+        font-weight: bold;
+        background-color: #f3f3f3;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35);
+        border-radius: 2px;
+    }
+
+    table.list .title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
+    table.list div.thumbnail {
+        padding: 5px 10px;
+    }
+
+    table.list td ul {
+        padding: 0;
+        margin: 0;
+        display: block;
+    }
+
+    table.list td ul li {
+        padding: 0 5px;
+        margin: 0;
+        display: inline-block;
+        border-left: 1px solid #cccccc;
+        list-style-type: none;
+    }
+    table.list td ul li:first-child {
+        border-left: none;
+    }
+</style>
+<script type="text/javascript">
+    $(function(){
+
+    });
+</script>
+
+<div>
+    <h3> 검색 결과</h3>
+</div>
+<div data-th-if="${#lists.isEmpty(result.documents)}">
+    <h3>검색 결과가 없습니다.</h3>
+</div>
+<div data-th-unless="${#lists.isEmpty(result.documents)}">
+
+    <table class="list">
+        <colgroup>
+            <col width="120px">
+            <col width="*">
+            <col width="120px">
+
+        </colgroup>
+        <tbody>
+        <tr data-th-each="item : ${result.documents}">
+            <td><div class="thumbnail"><img data-th-src="${item.thumbnail}"/></div></td>
+            <td>
+                <div> <span class="title" data-th-utext="${item.title}">Title</span></div> <!--escape 문자를 해결-->
+                <div class="book-summary">
+                    <ul>
+                        <li data-th-unless="${#lists.isEmpty(item.authors)}"><span data-th-text="${#strings.listJoin(item.authors, ',')}">authors</span> 저</li>
+                        <li data-th-unless="${#lists.isEmpty(item.translators)}"><span data-th-text="${#strings.listJoin(item.translators, ',')}">translators</span> 역</li>
+                        <li data-th-unless="${#lists.isEmpty(item.publisher)}"><span data-th-text="${item.publisher}">publisher</span></li>
+                    </ul>
+                </div>
+                <div style="display: block"> <span data-th-text="${item.price}">authors</span> 원</div>
+            </td>
+            <td> <button class="bookmark">북마크</button> </td>
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    <ul class="page">
+        <li><span data-th-text="prev"><< prev</span> </li>
+        <li><span data-th-text="next">>> next</span> </li>
+    </ul>
+    <div data-th-text="${result.meta.totalCount}"> TEST LIST1 </div>
+</div>
