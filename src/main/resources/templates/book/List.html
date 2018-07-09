@@ -1,3 +1,6 @@
+<!--
+책검색 결과 정보 List 로 표현
+-->
 <style type="text/css">
     table.list {
         width: 100%;
@@ -41,6 +44,17 @@
     table.list td ul li:first-child {
         border-left: none;
     }
+
+    ul.page {
+        display: block;
+        margin: auto;
+    }
+
+    ul.page li {
+        display: inline-block;
+        list-style-type: none;
+    }
+
 </style>
 <script type="text/javascript">
     $(function(){
@@ -51,11 +65,18 @@
 <div>
     <h3> 검색 결과</h3>
 </div>
+<!--검색 결과가 없는 경우 리스트 출력 -->
 <div data-th-if="${#lists.isEmpty(result.documents)}">
     <h3>검색 결과가 없습니다.</h3>
 </div>
+<!--검색 결과 List-->
 <div data-th-unless="${#lists.isEmpty(result.documents)}">
-
+    <div >
+        <ul class="page">
+            <li><span data-th-text="prev">prev</span> </li>
+            <li><span data-th-text="next">next</span> </li>
+        </ul>
+    </div>
     <table class="list">
         <colgroup>
             <col width="120px">
@@ -81,9 +102,6 @@
         </tr>
         </tbody>
     </table>
-    <ul class="page">
-        <li><span data-th-text="prev"><< prev</span> </li>
-        <li><span data-th-text="next">>> next</span> </li>
-    </ul>
+
     <div data-th-text="${result.meta.totalCount}"> TEST LIST1 </div>
 </div>
