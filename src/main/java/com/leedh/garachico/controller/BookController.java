@@ -47,6 +47,7 @@ public class BookController {
         BookDTO.Res result = kakaoBookApiService.findBook(query, sort, category, target, pageNo, pageSize );
 
         model.put("result", result);
+        model.put("page", pageNo);
 
         return "book/list";
     }
