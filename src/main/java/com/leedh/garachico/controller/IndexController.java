@@ -3,7 +3,7 @@ package com.leedh.garachico.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * 기본 페이지 라우팅
@@ -19,19 +19,19 @@ public class IndexController {
     /**
      * 기본 페이지 설정
      */
-    @GetMapping("/")
+    @RequestMapping("/")
     public String index() {
         log.debug("index");
         return "index";
     }
 
-    @GetMapping("/login")
+    @RequestMapping("/login")
     public String login() {
         log.debug("login");
         return "member/login";
     }
 
-    @GetMapping("/login-error")
+    @RequestMapping("/login-error")
     public String login(Model model) {
         log.debug("login-error");
         model.addAttribute("loginError", true);

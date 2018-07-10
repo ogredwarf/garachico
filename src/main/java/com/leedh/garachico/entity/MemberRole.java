@@ -1,9 +1,6 @@
 package com.leedh.garachico.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,9 +12,11 @@ import javax.persistence.*;
  * Date: 2018-07-10
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Getter
 @Entity(name = "tlb_member_role")
 @ToString
+@Builder
 public class MemberRole {
 
     @Id
@@ -29,6 +28,6 @@ public class MemberRole {
     private String memberRoleName;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name="member_no")
     private Member member;
 }

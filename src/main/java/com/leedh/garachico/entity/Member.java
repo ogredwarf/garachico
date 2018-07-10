@@ -7,7 +7,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Set;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Member table 설정
@@ -40,12 +41,13 @@ public class Member {
     private Timestamp createDt;
 
     @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    private Set<MemberRole> memberRoles;
+    private List<MemberRole> memberRoles;
 
     @Builder
-    public Member(String username, String pswd ) {
+    public Member(String username, String pswd, String role ) {
         this.username = username;
         this.password = pswd;
+        this.memberRoles = Arrays.asList( MemberRole.builder().memberRoleName(role).build() );
     }
 
 }
