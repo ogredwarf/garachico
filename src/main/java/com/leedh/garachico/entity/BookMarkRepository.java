@@ -1,6 +1,7 @@
 package com.leedh.garachico.entity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * 설명:
@@ -9,5 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * User: 이동훈
  * Date: 2018-07-08
  */
-public interface BookMakrRepository extends JpaRepository<BookMark, Long > {
+@Repository
+public interface BookMarkRepository extends JpaRepository<BookMark, Long > {
 }
