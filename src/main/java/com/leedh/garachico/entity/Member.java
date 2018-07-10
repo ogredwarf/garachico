@@ -5,11 +5,9 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 /**
  * Member table 설정
@@ -28,8 +26,8 @@ public class Member {
     @GeneratedValue
     private Long memberNo;
 
-    @Column(nullable = false)
-    private String userId;
+    @Column(nullable = false, unique = true )
+    private String username;
 
     @JsonIgnore
     @Column(length = 64, nullable = false)
@@ -41,9 +39,12 @@ public class Member {
     @CreationTimestamp
     private Timestamp createDt;
 
+    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    private Set<MemberRole> memberRoles;
+
     @Builder
-    public Member(String userId, String pswd ) {
-        this.userId = userId;
+    public Member(String username, String pswd ) {
+        this.username = username;
         this.password = pswd;
     }
 
