@@ -1,13 +1,13 @@
 package com.leedh.garachico.service.feign;
 
-import org.apache.commons.lang.StringUtils;
+import com.leedh.garachico.dto.BookDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * 설명:
@@ -16,7 +16,7 @@ import static org.junit.Assert.assertNotEquals;
  * User: 이동훈
  * Date: 2018-07-08
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class KakaoBookApiServiceTest {
 
@@ -26,8 +26,8 @@ public class KakaoBookApiServiceTest {
     @Test
     public void findBook(){
 
-        String result = kakaoBookApiService.findBookRaw("자바");
-        assertNotEquals(StringUtils.defaultString(result).length(), 0);
+        BookDTO.Res result = kakaoBookApiService.findBook("자바");
+        assertNotNull(result);
     }
 
 }

@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
 /**
- * 설명:
+ * 설명: 페인을 이용한 카카오 API 연결
  * Project: garachico
  * CLASS: KakaoApiFeignConfig
  * User: 이동훈
