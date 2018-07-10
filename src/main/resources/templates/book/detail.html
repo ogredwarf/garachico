@@ -1,16 +1,34 @@
 <style>
-.detailInfo li{
-    list-style-type: none;
-}
-.detailView div.thumbnail
-{
-    text-align: center;
-}
+    .detailInfo li{
+        list-style-type: none;
+    }
+    .detailView div.thumbnail
+    {
+        text-align: center;
+    }
 
-.detailInfo span.label {
-    display: inline-block;
-    width: 150px;
-}
+    .detailInfo span.label {
+        font-weight: bold;
+        display: inline-block;
+        width: 100px;
+    }
+    .detailInfo {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
+
+    div.detailInfo .overview {
+        grid-column: 1/ span 2;
+    }
+    div.detailInfo .overview a{
+        color: blue;
+    }
+    div.detailInfo .overview .label{
+        display: block;
+    }
+
+
 </style>
 
 <div data-th-unless="${#lists.isEmpty(result.documents)}">
@@ -22,15 +40,15 @@
 
         </div>
         <div class="detailInfo">
-            <ul>
-                <li data-th-unless="${#lists.isEmpty(item.authors)}">     <span class="label">작가</span>  <span data-th-name="authors" data-th-text="${#strings.listJoin(item.authors, ',')}">authors</span> 저</li>
-                <li data-th-unless="${#lists.isEmpty(item.translators)}"> <span class="label">번역자</span>  <span data-th-name="translators" data-th-text="${#strings.listJoin(item.translators, ',')}">translators</span> 역</li>
-                <li data-th-unless="${#lists.isEmpty(item.publisher)}">   <span class="label">출판사</span>  <span data-th-name="publisher" data-th-text="${item.publisher}">publisher</span></li>
-                <li data-th-unless="${#lists.isEmpty(item.price)}">       <span class="label">도서 정가</span>  <span data-th-name="price" data-th-text="${item.price}">price</span>원</li>
-                <li data-th-unless="${#lists.isEmpty(item.salePrice)}">   <span class="label">도서판매가</span>  <span data-th-name="salePrice" data-th-text="${item.salePrice}">sale_price</span>원</li>
-                <li data-th-unless="${#lists.isEmpty(item.status)}">      <span class="label">책 상태</span>  <span data-th-name="status" data-th-text="${item.status}">status</span></li>
-                <li data-th-unless="${#lists.isEmpty(item.url)}">         <span class="label">다음책검색</span>  <span data-th-name="url"> <a data-th-href="${item.url}">링크</a></span></li>
-            </ul>
+            <div><span class="label">작가</span>          <span data-th-name="authors" data-th-text="${#strings.listJoin(item.authors, ',')}">authors</span> 지음</div>
+            <div><span class="label">번역자</span>        <span data-th-name="translators" data-th-text="${#strings.listJoin(item.translators, ',')}">translators</span> 옮김</div>
+            <div><span class="label">출판사</span>        <span data-th-name="publisher" data-th-text="${item.publisher}">publisher</span>펴냄</div>
+            <div><span class="label">도서 정가</span>     <span data-th-name="price" data-th-text="${item.price}">price</span>원</div>
+            <div><span class="label">도서판매가</span>    <span data-th-name="salePrice" data-th-text="${item.salePrice}">sale_price</span>원</div>
+            <div><span class="label">도서출판일자</span>  <span data-th-name="datetime" data-th-text="${#strings.substring(item.datetime,0,10)}">datetime</span></div>
+            <div><span class="label">도서상태</span>      <span data-th-name="status" data-th-text="${item.status}">status</span></div>
+            <div class="overview"><span class="label">책소개</span>       <span data-th-name="contents" data-th-utext="${item.contents}">status</span></div>
+            <div class="overview"><span data-th-name="url"> <a data-th-href="${item.url}">바로가기</a></span></div>
         </div>
     </div>
 </div>

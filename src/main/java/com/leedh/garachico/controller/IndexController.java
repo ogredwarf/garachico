@@ -2,6 +2,7 @@ package com.leedh.garachico.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
@@ -22,5 +23,18 @@ public class IndexController {
     public String index() {
         log.debug("index");
         return "index";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        log.debug("login");
+        return "member/login";
+    }
+
+    @GetMapping("/login-error")
+    public String login(Model model) {
+        log.debug("login-error");
+        model.addAttribute("loginError", true);
+        return "member/login";
     }
 }

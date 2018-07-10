@@ -5,7 +5,7 @@
       layout:decorator="layout/template_default">
 <head>
     <meta charset="UTF-8">
-    <title>책조회</title>
+    <title>책검색</title>
     <style>
         .condition {
             display: grid;
@@ -86,11 +86,8 @@
     </script>
 </head>
 <body>
-<header layout:fragment="header">
-    <h1>책 검색</h1>
-</header>
 <section layout:fragment="content">
-
+    <h1>책 검색</h1>
     <form id="search_condition" method="post" onsubmit="return book.find(1);">
         <div class="condition">
             <div>

@@ -6,6 +6,7 @@
         width: 100%;
         padding: 0 5px;
     }
+
     table.list button {
         display: inline-block;
         padding: 2px 20px;
@@ -14,7 +15,7 @@
         cursor: pointer;
         font-weight: bold;
         background-color: #f3f3f3;
-        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.35);
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.35);
         border-radius: 2px;
     }
 
@@ -23,6 +24,9 @@
         font-weight: bold;
         font-size: 1.4rem;
         cursor: pointer;
+    }
+    table.list .title a {
+        color: black;
     }
 
     table.list div.thumbnail {
@@ -42,6 +46,7 @@
         border-left: 1px solid #cccccc;
         list-style-type: none;
     }
+
     table.list td ul li:first-child {
         border-left: none;
     }
@@ -59,6 +64,7 @@
     ul.page_area li .currentPage {
         font-weight: bold;
     }
+
     ul.page_area li .prev,
     ul.page_area li .next {
         cursor: pointer;
@@ -66,30 +72,38 @@
 
 </style>
 <script type="text/javascript">
-    $.extend( srchBook, {
-        goDetail : function (obj) {
+    $.extend(srchBook, {
+        goDetail: function (obj) {
             console.log("url: " + obj.href);
             console.log("title: " + $(obj).attr('alt'));
             $.alert({
+                boxWidth: '800px',
                 title: $(obj).attr('alt'),
-                content: 'url:'+ obj.href
+                content: 'url:' + obj.href
             });
             return false;
         }
     });
 
-    $(function(){
+    $(function () {
 
-        /*페이지 이동 관련*/
-        $('ul.page_area li .prev').click(function (e) {
+        /*페이지 이동 관련: prev */
+        $('ul.page_area li>.prev').click(function (e) {
             e.preventDefault();
             var curPageNo = $('ul.page_area li .currentPage').text;
-            if( curPageNo > 1 ){
-                srchBook.goPage( curPageNo -1 );
+            if (curPageNo > 1) {
+                srchBook.goPage(curPageNo - 1);
             }
             else {
                 $.alert("첫 페이지 입니다. ");
             }
+        });
+        /*페이지 이동 관련*/
+        $('ul.page_area li>.next').click(function (e) {
+            e.preventDefault();
+            var curPageNo = $('ul.page_area li .currentPage').text;
+            log.
+            srchBook.goPage(curPageNo + 1);
         });
     });
 </script>
@@ -105,9 +119,9 @@
 <div data-th-unless="${#lists.isEmpty(result.documents)}">
     <div style="width: 100%; text-align: center">
         <ul class="page_area">
-            <li><span class="prev">Prev</span> </li>
-            <li><span class="currentPage" data-th-text="${page}"></span> </li>
-            <li data-th-unless="${result.meta.isEnd}"><span class="next">Next</span> </li>
+            <li><span class="prev">Prev</span></li>
+            <li><span class="currentPage" data-th-text="${page}"></span></li>
+            <li data-th-unless="${result.meta.isEnd}"><span class="next">Next</span></li>
         </ul>
     </div>
     <table class="list">
@@ -124,7 +138,7 @@
                     <a onclick="return srchBook.goDetail(this);"
                        data-th-href="@{'/book/detail/' + ${#strings.arraySplit(item.isbn,' ')[0]}}">
                         <img data-th-src="${item.thumbnail}"
-                             data-th-alt="${item.title}" />
+                             data-th-alt="${item.title}"/>
                     </a>
                 </div>
             </td>
@@ -133,21 +147,34 @@
                     <a onclick="return srchBook.goDetail(this)"
                        data-th-href="@{'/book/detail/' + ${#strings.arraySplit(item.isbn,' ')[0]}}"
                        data-th-alt="${item.title}"
-                       data-th-utext="${item.title}" >
+                       data-th-utext="${item.title}">
                         Title
                     </a>
                 </div>
                 <div class="book-summary">
                     <ul>
-                        <li data-th-unless="${#lists.isEmpty(item.authors)}">       <span data-th-name="authors" data-th-text="${#strings.listJoin(item.authors, ',')}">authors</span> 저</li>
-                        <li data-th-unless="${#lists.isEmpty(item.translators)}">   <span data-th-name="translators" data-th-text="${#strings.listJoin(item.translators, ',')}">translators</span> 역</li>
-                        <li data-th-unless="${#lists.isEmpty(item.publisher)}">     <span data-th-name="publisher" data-th-text="${item.publisher}">publisher</span></li>
+                        <li data-th-unless="${#lists.isEmpty(item.authors)}">
+                            <span data-th-name="authors"
+                                  data-th-text="${#strings.listJoin(item.authors, ',')}">authors</span>
+                            저
+                        </li>
+                        <li data-th-unless="${#lists.isEmpty(item.translators)}">
+                            <span data-th-name="translators"
+                                  data-th-text="${#strings.listJoin(item.translators, ',')}">translators</span>
+                            역
+                        </li>
+                        <li data-th-unless="${#lists.isEmpty(item.publisher)}">
+                            <span data-th-name="publisher"
+                                  data-th-text="${item.publisher}">publisher</span>
+                        </li>
                     </ul>
                 </div>
-                <div style="display: block"> <span data-th-text="${item.price}">authors</span> 원</div>
-                <div style="display: block"> <span data-th-text="${item.isbn}">isbn</span></div>
+                <div style="display: block"><span data-th-text="${item.price}">authors</span>원</div>
+                <div style="display: block">isbn: <span data-th-text="${item.isbn}">isbn</span></div>
             </td>
-            <td> <button class="bookmark">북마크</button> </td>
+            <td>
+                <button class="bookmark">북마크</button>
+            </td>
         </tr>
         </tbody>
     </table>
