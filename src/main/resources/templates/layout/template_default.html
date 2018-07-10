@@ -30,53 +30,13 @@
 
     <link rel="stylesheet" th:href="@{/css/styles.css}">
     <script th:src="@{/js/common.js}"></script>
-    <style>
-        nav.header-menu {
-            margin: 0;
-            padding: 0;
-            color: white;
-        }
-        nav.header-menu ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #333;
-        }
 
-        nav.header-menu li {
-            float: left;
-            border-right: 1px solid #bbb;
-        }
 
-        nav.header-menu li:last-child {
-            float: right;
-            border-right: none;
-        }
-
-        nav.header-menu li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        nav.header-menu li a:hover {
-            background-color: #111;
-        }
-    </style>
 
 </head>
 <body>
-<header>
-    <nav class="header-menu">
-        <ul>
-            <li><a data-th-href="@{/}">책검색</a></li>
-            <li><a data-th-href="@{/login}">북마크</a></li>
-            <li><a data-th-href="@{/login}">Login</a></li>
-        </ul>
-    </nav>
+<!--header 메뉴에서만-->
+<header data-th-replace="/menu/header.html">
 </header>
 <section layout:fragment="content">
     <p>Layout Content</p>
