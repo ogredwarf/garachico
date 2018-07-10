@@ -20,9 +20,8 @@
 
     table.list .title {
         text-decoration: none;
-        text-align: center;
         font-weight: bold;
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         cursor: pointer;
     }
 
@@ -47,20 +46,51 @@
         border-left: none;
     }
 
-    ul.page {
+    ul.page_area {
         display: block;
         margin: auto;
     }
 
-    ul.page li {
+    ul.page_area li {
         display: inline-block;
         list-style-type: none;
     }
 
+    ul.page_area li .currentPage {
+        font-weight: bold;
+    }
+    ul.page_area li .prev,
+    ul.page_area li .next {
+        cursor: pointer;
+    }
+
 </style>
 <script type="text/javascript">
+    $.extend( srchBook, {
+        goDetail : function (obj) {
+            console.log("url: " + obj.href);
+            console.log("title: " + $(obj).attr('alt'));
+            $.alert({
+                title: $(obj).attr('alt'),
+                content: 'url:'+ obj.href
+            });
+            return false;
+        }
+    });
+
     $(function(){
 
+        /*페이지 이동 관련*/
+        $('ul.page_area li .prev').click(function (e) {
+            e.preventDefault();
+            var curPageNo = $('ul.page_area li .currentPage').text;
+            if( curPageNo > 1 ){
+                srchBook.goPage( curPageNo -1 );
+            }
+            else {
+                $.alert("첫 페이지 입니다. ");
+            }
+        });
     });
 </script>
 
@@ -74,9 +104,10 @@
 <!--검색 결과 List-->
 <div data-th-unless="${#lists.isEmpty(result.documents)}">
     <div style="width: 100%; text-align: center">
-        <ul class="page">
-            <li><span data-th-text="prev">prev</span> </li>
-            <li><span data-th-text="next">next</span> </li>
+        <ul class="page_area">
+            <li><span class="prev">Prev</span> </li>
+            <li><span class="currentPage" data-th-text="${page}"></span> </li>
+            <li data-th-unless="${result.meta.isEnd}"><span class="next">Next</span> </li>
         </ul>
     </div>
     <table class="list">
@@ -88,11 +119,22 @@
         </colgroup>
         <tbody>
         <tr data-th-each="item : ${result.documents}">
-            <td><div class="thumbnail"><img data-th-src="${item.thumbnail}"/></div></td>
             <td>
-                <div>
-                    <a data-th-href="@{'/book/detail/' + ${#strings.arraySplit(item.isbn,' ')[0]}}">
-                        <span class="title" data-th-utext="${item.title}" >Title</span> <!--escape 문자를 해결-->
+                <div class="thumbnail">
+                    <a onclick="return srchBook.goDetail(this);"
+                       data-th-href="@{'/book/detail/' + ${#strings.arraySplit(item.isbn,' ')[0]}}">
+                        <img data-th-src="${item.thumbnail}"
+                             data-th-alt="${item.title}" />
+                    </a>
+                </div>
+            </td>
+            <td>
+                <div class="title">
+                    <a onclick="return srchBook.goDetail(this)"
+                       data-th-href="@{'/book/detail/' + ${#strings.arraySplit(item.isbn,' ')[0]}}"
+                       data-th-alt="${item.title}"
+                       data-th-utext="${item.title}" >
+                        Title
                     </a>
                 </div>
                 <div class="book-summary">
