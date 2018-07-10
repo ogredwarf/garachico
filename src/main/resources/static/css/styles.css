@@ -1,9 +1,10 @@
 body {
     list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 a:link, a:visited {
-    color:black;
     text-decoration: none;
 }
 
