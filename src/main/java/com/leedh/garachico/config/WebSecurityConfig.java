@@ -38,9 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
-                .loginPage("/login")
-                .successForwardUrl("/")
-                .failureForwardUrl("/login-error")
+                .loginPage("/login")    // 권한없는 url이 접근하면 자동으로 지정된 페이지로 이동
+                .defaultSuccessUrl("/", true)   // 로그인 하고 지정한 url이 없는 경우 default 페이지로 이동
+                .failureForwardUrl("/login?fail=true")  // 로그인 실패시 이동되는 url 설정
                 .permitAll()
                 .and()
             .logout()
