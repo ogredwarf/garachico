@@ -45,6 +45,10 @@
         border-left: 1px solid #cccccc;
         list-style-type: none;
     }
+    table.list td ul li .surfix {
+        color: #333333;
+        font-weight: bold;
+    }
 
     table.list td ul li:first-child {
         border-left: none;
@@ -68,6 +72,7 @@
     ul.page_area li .next {
         cursor: pointer;
     }
+
 
 </style>
 <script type="text/javascript">
@@ -122,7 +127,7 @@
     <div style="width: 100%; text-align: center">
         <ul class="page_area">
             <input type="hidden" id="curPageNo" data-th-value="${page}" />
-            <li><span class="prev">Prev</span></li>
+            <li data-th-if="${1 < page}"><span class="prev">Prev</span></li>
             <li><span class="currentPage" data-th-text="${page}"></span></li>
             <li data-th-unless="${result.meta.isEnd}"><span class="next">Next</span></li>
         </ul>
@@ -166,21 +171,27 @@
                         <li data-th-unless="${#lists.isEmpty(item.authors)}">
                             <span data-th-name="authors"
                                   data-th-text="${#strings.listJoin(item.authors, ',')}">authors</span>
-                            저
+                            <span class="surfix">저</span>
                         </li>
                         <li data-th-unless="${#lists.isEmpty(item.translators)}">
                             <span data-th-name="translators"
                                   data-th-text="${#strings.listJoin(item.translators, ',')}">translators</span>
-                            역
+                            <span class="surfix">역</span>
                         </li>
                         <li data-th-unless="${#lists.isEmpty(item.publisher)}">
                             <span data-th-name="publisher"
                                   data-th-text="${item.publisher}">publisher</span>
+                            <span class="surfix">펴냄</span>
                         </li>
                     </ul>
                 </div>
-                <div style="display: block"><span data-th-text="${item.price}">authors</span>원</div>
-                <div style="display: block">isbn: <span data-th-text="${item.isbn}">isbn</span></div>
+                <div style="display: block" class="price">
+                    <ul>
+                        <li>정가:   <span data-th-remove="tag" data-th-text="${#numbers.formatCurrency(item.price)}">authors</span></li>
+                        <li>판매가: <span data-th-remove="tag" data-th-text="${#numbers.formatCurrency(item.salePrice)}">authors</span></li>
+                    </ul>
+                </div>
+               <!-- <div style="display: block">isbn: <span data-th-text="${item.isbn}">isbn</span></div>-->
             </td>
             <td>
                 <button class="bookmark">북마크</button>

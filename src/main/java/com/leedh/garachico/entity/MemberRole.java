@@ -1,6 +1,7 @@
 package com.leedh.garachico.entity;
 
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
@@ -17,7 +18,7 @@ import javax.persistence.*;
 @Entity(name = "tlb_member_role")
 @ToString
 @Builder
-public class MemberRole {
+public class MemberRole implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,4 +31,9 @@ public class MemberRole {
     @ManyToOne
     @JoinColumn(name="member_no")
     private Member member;
+
+    @Override
+    public String getAuthority() {
+        return memberRoleName;
+    }
 }

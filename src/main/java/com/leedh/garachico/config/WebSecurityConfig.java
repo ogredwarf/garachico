@@ -1,14 +1,14 @@
 package com.leedh.garachico.config;
 
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * 설명:
@@ -20,6 +20,10 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserDetailsService myDetailsService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -34,11 +38,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                /*.antMatchers("/", "/").permitAll()*/
+                .antMatchers("/join", "/member/join_process").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")    // 권한없는 url이 접근하면 자동으로 지정된 페이지로 이동
+                .loginProcessingUrl("member/login_process") // 로그인 진행 url
                 .defaultSuccessUrl("/", true)   // 로그인 하고 지정한 url이 없는 경우 default 페이지로 이동
                 .failureForwardUrl("/login?fail=true")  // 로그인 실패시 이동되는 url 설정
                 .permitAll()
@@ -48,16 +53,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build();
-
-        return new InMemoryUserDetailsManager(user);
+    public PasswordEncoder passwordEncoder(){
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder;
     }
+
+    protected void configure(AuthenticationManagerBuilder auth ) throws Exception {
+        auth.userDetailsService(myDetailsService)
+                .passwordEncoder( passwordEncoder() );
+    }
+
+
 }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/template_default">
+<head>
+    <title>회원가입</title>
+</head>
+<body layout:fragment="content">
+    <h1>회원가입</h1>
+    <form th:action="@{/member/join_process}" method="post">
+        <label for="username">Username</label>:
+        <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
+        <label for="password">Password</label>:
+        <input type="password" id="password" name="password"/> <br/>
+        <input type="submit" value="Sign Up"/>
+    </form>
+    <div data-th-text="test" th:remove="tag"></div>
+</body>
+</html>
