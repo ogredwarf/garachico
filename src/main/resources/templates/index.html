@@ -39,7 +39,7 @@
 
 
                 $('#list-contents').html('');
-                param.page = page | 1;
+                param.page = page? page : 1;
 
                 /* 검색어가 없는 경우 에러 메시지 출력 */
                 if( !param.query ){
@@ -50,6 +50,8 @@
 
                 /* 최종 기록 저장 */
                 srchBook.lastCondition = param;
+
+                console.log("param : " + param )
                 $('button.find').prop("disabled", true);
                 $.post('/book/list', param, function (data) {}, 'html')
                     .done(function (data) {
@@ -63,6 +65,7 @@
             
             /* Page 이동 */
             goPage: function (page) {
+                console.log("goPage" + page);
                 srchBook.find(page, srchBook.lastCondition );
             },
             
