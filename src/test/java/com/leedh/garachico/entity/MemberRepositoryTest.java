@@ -44,14 +44,15 @@ public class MemberRepositoryTest {
         final String userId = "wishadow@gmail.com";
         final String passwd = cryptPasswordEncoder.encode("password1!");
         memberRepository.save(Member.builder()
-                .userId(userId)
+                .username(userId)
                 .pswd(passwd)
+                .role("USER")
                 .build());
 
         List<Member> memberList = memberRepository.findAll();
 
         Member member = memberList.get(0);
-        assertThat(member.getUserId(), is(userId));
+        assertThat(member.getUsername(), is(userId));
         assertThat(member.getPassword(), is(passwd));
     }
 }
