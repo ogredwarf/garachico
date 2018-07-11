@@ -23,7 +23,6 @@
         text-decoration: none;
         font-weight: bold;
         font-size: 1.4rem;
-        cursor: pointer;
     }
     table.list .title a {
         color: black;
@@ -88,9 +87,11 @@
     $(function () {
 
         /*페이지 이동 관련: prev */
-        $('ul.page_area li>.prev').click(function (e) {
+        $('ul.page_area li .prev').click(function (e) {
             e.preventDefault();
-            var curPageNo = $('ul.page_area li .currentPage').text;
+            var curPageNo = parseInt($('#curPageNo').val());
+            curPageNo = curPageNo? curPageNo : 1;
+
             if (curPageNo > 1) {
                 srchBook.goPage(curPageNo - 1);
             }
@@ -99,10 +100,11 @@
             }
         });
         /*페이지 이동 관련*/
-        $('ul.page_area li>.next').click(function (e) {
+        $('ul.page_area li .next').click(function (e) {
             e.preventDefault();
-            var curPageNo = $('ul.page_area li .currentPage').text;
-            log.
+            var curPageNo = parseInt($('#curPageNo').val());
+            curPageNo = curPageNo? curPageNo : 1;
+
             srchBook.goPage(curPageNo + 1);
         });
     });
@@ -119,6 +121,7 @@
 <div data-th-unless="${#lists.isEmpty(result.documents)}">
     <div style="width: 100%; text-align: center">
         <ul class="page_area">
+            <input type="hidden" id="curPageNo" data-th-value="${page}" />
             <li><span class="prev">Prev</span></li>
             <li><span class="currentPage" data-th-text="${page}"></span></li>
             <li data-th-unless="${result.meta.isEnd}"><span class="next">Next</span></li>
@@ -134,22 +137,29 @@
         <tbody>
         <tr data-th-each="item : ${result.documents}">
             <td>
-                <div class="thumbnail">
+                <div class="thumbnail"  data-th-unless="${#strings.isEmpty(item.isbn)}">
                     <a onclick="return srchBook.goDetail(this);"
-                       data-th-href="@{'/book/detail/' + ${#strings.arraySplit(item.isbn,' ')[0]}}">
+                       data-th-href="@{'/book/detail?bookid=' + ${#strings.substringAfter(item.url,'bookid=')}}">
                         <img data-th-src="${item.thumbnail}"
                              data-th-alt="${item.title}"/>
                     </a>
                 </div>
+                <div class="thumbnail"  data-th-if="${#strings.isEmpty(item.isbn)}" data-th-utext="${item.title}">
+                        <img data-th-src="${item.thumbnail}"
+                             data-th-alt="${item.title}"/>
+                </div>
             </td>
             <td>
-                <div class="title">
+                <div class="title" data-th-unless="${#strings.isEmpty(item.isbn)}" >
                     <a onclick="return srchBook.goDetail(this)"
-                       data-th-href="@{'/book/detail/' + ${#strings.arraySplit(item.isbn,' ')[0]}}"
+                       data-th-href="@{'/book/detail?bookid=' + ${#strings.substringAfter(item.url,'bookid=')}}"
                        data-th-alt="${item.title}"
                        data-th-utext="${item.title}">
                         Title
                     </a>
+                </div>
+                <div class="title" data-th-if="${#strings.isEmpty(item.isbn)}" data-th-utext="${item.title}">
+                        Title
                 </div>
                 <div class="book-summary">
                     <ul>
