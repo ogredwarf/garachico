@@ -4,6 +4,7 @@ import com.leedh.garachico.dto.BookDTO;
 import com.leedh.garachico.enums.Target;
 import com.leedh.garachico.service.feign.KakaoBookApiService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,7 +31,7 @@ public class BookController {
     /**
      * 책 검색 방안
      */
-    @PostMapping("book/list")
+    @RequestMapping("book/list")
     public String find(HttpServletRequest request,
                        HttpServletResponse response,
                        ModelMap model,
@@ -53,16 +54,17 @@ public class BookController {
     }
 
 
-    @GetMapping("book/detail/{isbn}")
+    @GetMapping("book/detail")
     public String getDetail(HttpServletRequest request,
                        HttpServletResponse response,
                        ModelMap model,
-                       @PathVariable("isbn")                                                      String isbn       /*검색을 원하는 질의어*/
+                       @RequestParam("bookid")                                                      String bookid       /*검색을 원하는 질의어*/
     ){
 
-        log.debug("quert = {}", isbn);
+        log.debug("quert = {}", bookid);
 
-        BookDTO.Res result = kakaoBookApiService.findBookByIsbn(isbn, Target.ISBN.getCode() );
+        bookid = bookid.replaceAll("[^0-9]", "");
+        BookDTO.Res result = kakaoBookApiService.findBookByIsbn(bookid, Target.ISBN.getCode() );
 
         model.put("result", result);
 
