@@ -13,11 +13,9 @@ import javax.persistence.*;
  * Date: 2018-07-10
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 @Getter
 @Entity(name = "tlb_member_role")
 @ToString
-@Builder
 public class MemberRole implements GrantedAuthority {
 
     @Id
@@ -26,14 +24,15 @@ public class MemberRole implements GrantedAuthority {
     private Long memberRoleId;
 
     @Column(nullable = false, unique = true )
-    private String memberRoleName;
-
-    @ManyToOne
-    @JoinColumn(name="member_no")
-    private Member member;
+    private String roleName;
 
     @Override
     public String getAuthority() {
-        return memberRoleName;
+        return roleName;
+    }
+
+    @Builder
+    public MemberRole( String roleName){
+        this.roleName = roleName;
     }
 }
