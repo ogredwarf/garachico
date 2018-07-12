@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
+
     /**
      * 사용자 검색
      */
