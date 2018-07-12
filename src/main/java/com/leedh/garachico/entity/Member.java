@@ -27,11 +27,11 @@ public class Member {
     @GeneratedValue
     private Long memberNo;
 
-    @Column(nullable = false, unique = true )
+    @Column(nullable = false, unique = true, length = 60)
     private String username;
 
     @JsonIgnore
-    @Column(length = 64, nullable = false)
+    @Column(nullable = false)
     private String password;
 
     @UpdateTimestamp
@@ -40,14 +40,15 @@ public class Member {
     @CreationTimestamp
     private Timestamp createDt;
 
-    @OneToMany(mappedBy = "member", cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
-    private List<MemberRole> memberRoles;
+    @OneToMany( cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_no")
+    private List<MemberRole> roles;
 
     @Builder
     public Member(String username, String pswd, String role ) {
         this.username = username;
         this.password = pswd;
-        this.memberRoles = Arrays.asList( MemberRole.builder().memberRoleName(role).build() );
+        this.roles = Arrays.asList( MemberRole.builder().roleName(role).build() );
     }
 
 }
