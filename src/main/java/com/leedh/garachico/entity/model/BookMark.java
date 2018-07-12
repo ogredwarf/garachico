@@ -1,9 +1,6 @@
-package com.leedh.garachico.entity;
+package com.leedh.garachico.entity.model;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -25,9 +22,10 @@ import java.sql.Timestamp;
 public class BookMark {
 
     @Id
+    @GeneratedValue
     private Long markId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String isbn;
 
     @Column(nullable = false)
@@ -42,5 +40,12 @@ public class BookMark {
     @ManyToOne(optional = false)
     @JoinColumn(name = "member_no")
     private Member member;
+
+    @Builder
+    public BookMark ( String isbn, String title, Member member) {
+        this.isbn = isbn;
+        this.title = title;
+        this.member = member;
+    }
 
 }
