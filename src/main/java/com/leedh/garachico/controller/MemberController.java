@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Slf4j
 @Controller
-@RequestMapping("/member/**")
+@RequestMapping("/member")
 public class MemberController {
 
     @Autowired
@@ -45,6 +45,7 @@ public class MemberController {
             message = "password 를 다시 입력 바랍니다.";
         }
         else {
+
             message = memberService.joinMember( username, password);
             if( StringUtils.isBlank(message)) status = true;
         }
