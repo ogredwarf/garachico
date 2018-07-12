@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * 설명: 카카오 책 검색 API 연결
+ * 설명: 카카오 책 검색 KAKAO API 연결
  * - https://developers.kakao.com/docs/restapi/search#책-검색
  * Project: garachico
  * CLASS: KakaoBookApiService

@@ -17,6 +17,9 @@ import java.util.List;
  */
 public class BookDTO {
 
+    /**
+     * 해당 Req는 DTO를 이용해서도 받을 수 있다는 것을 보여주기 위해 만듬
+     */
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
@@ -32,6 +35,9 @@ public class BookDTO {
 
     }
 
+    /**
+     * 실제 KAKAOAPI 책 검색 결과를 DTO에 저장
+     */
     @Data
     @AllArgsConstructor
     @NoArgsConstructor

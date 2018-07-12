@@ -24,4 +24,5 @@ public interface SearchHistoryRepository extends JpaRepository<SearchHistory, Lo
      * @return
      */
     List<SearchHistory> findFirst10ByMember(Member member, Sort sort);
+
 }
