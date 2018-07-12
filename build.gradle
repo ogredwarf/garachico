@@ -69,6 +69,7 @@ dependencies {
     /*thymeleaf*/
     compile('net.sourceforge.nekohtml:nekohtml')
     compile 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.3.0'
+    compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
 
     /*log*/
     compile 'ch.qos.logback:logback-classic:1.2.2'

@@ -1,7 +1,7 @@
 package com.leedh.garachico.dto;
 
-import com.leedh.garachico.entity.Member;
-import com.leedh.garachico.entity.MemberRole;
+import com.leedh.garachico.entity.model.Member;
+import com.leedh.garachico.entity.model.MemberRole;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

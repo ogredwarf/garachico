@@ -1,4 +1,4 @@
-package com.leedh.garachico.entity;
+package com.leedh.garachico.entity.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

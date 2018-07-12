@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 설명:
@@ -28,6 +29,7 @@ public class KakaoBookApiServiceTest {
 
         BookDTO.Res result = kakaoBookApiService.findBook("자바");
         assertNotNull(result);
+        assertTrue(result.getMeta().getTotalCount()>0);
     }
 
 }

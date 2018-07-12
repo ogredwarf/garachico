@@ -5,6 +5,7 @@
         padding: 0;
         color: white;
     }
+
     nav.header-menu ul {
         list-style-type: none;
         margin: 0;
@@ -22,6 +23,7 @@
         float: right;
         border-right: none;
     }
+
     nav.header-menu li:last-child a:hover {
         font-weight: bold;
         background: #111;
@@ -37,7 +39,7 @@
     }
 
     nav.header-menu li a:hover {
-        color:black;
+        color: black;
         font-weight: bold;
         background-color: #ffde00;
     }
@@ -46,6 +48,13 @@
     <ul>
         <li><a data-th-href="@{/}">책검색</a></li>
         <li><a data-th-href="@{/login}">북마크</a></li>
-        <li><a data-th-href="@{/join}">회원가입</a></li>
+        <li>
+            <span sec:authorize="isAuthenticated()">
+                <a data-th-href="@{/logout}">로그아웃</a>
+            </span>
+            <span sec:authorize="not isAuthenticated()">
+                <a data-th-href="@{/join}">회원가입</a>
+            </span>
+        </li>
     </ul>
 </nav>

@@ -1,5 +1,6 @@
-package com.leedh.garachico.entity;
+package com.leedh.garachico.entity.repository;
 
+import com.leedh.garachico.entity.model.Member;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;

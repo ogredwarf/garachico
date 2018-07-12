@@ -5,15 +5,15 @@
     <title>Login page</title>
 </head>
 <body layout:fragment="content">
-    <h1>Login page</h1>
-    <p data-th-if="${param.fail}" class="error">Wrong user or password</p>
-    <div data-th-if="${logout}">You have been logged out.</div>
-    <form data-th-action="@{/member/login_process}" method="post">
-        <label for="username">Username</label>:
-        <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-        <label for="password">Password</label>:
-        <input type="password" id="password" name="password" /> <br />
-        <input type="submit" value="Log in" />
-    </form>
+<h1>Login page</h1>
+<p data-th-if="${param.fail}" class="error">Wrong user or password</p>
+<div data-th-if="${param.logout}">You have been logged out.</div>
+<form data-th-action="@{/login_process}" method="post">
+    <label for="username">Username</label>:
+    <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
+    <label for="password">Password</label>:
+    <input type="password" id="password" name="password"/> <br/>
+    <input type="submit" value="Log in"/>
+</form>
 </body>
 </html>

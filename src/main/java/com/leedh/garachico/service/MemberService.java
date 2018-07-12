@@ -1,13 +1,14 @@
 package com.leedh.garachico.service;
 
-import com.leedh.garachico.entity.Member;
-import com.leedh.garachico.entity.MemberRepository;
+import com.leedh.garachico.entity.model.Member;
+import com.leedh.garachico.entity.repository.MemberRepository;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 설명:
@@ -30,6 +31,7 @@ public class MemberService {
     }
 
     /*회원 가입*/
+    @Transactional
     public String joinMember(@NonNull final String username,
                              @NonNull final String password ){
 
@@ -42,7 +44,7 @@ public class MemberService {
         memberRepository.save(Member.builder()
                 .username(username)
                 .pswd( new BCryptPasswordEncoder().encode(password))
-                .role("ROLE_USER")
+                .role("USER")   /*기본값*/
                 .build()
         );
 
