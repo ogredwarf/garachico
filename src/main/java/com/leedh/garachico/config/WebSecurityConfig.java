@@ -37,20 +37,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**", "/images/**", "/resources/**", "/webjars/**").permitAll();
 
         http
-                .authorizeRequests()
+            .authorizeRequests()
                 .antMatchers("/join", "/member/join_process").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")    // 권한없는 url이 접근하면 자동으로 지정된 페이지로 이동
-                .loginProcessingUrl("member/login_process") // 로그인 진행 url
+                .loginProcessingUrl("/member/login_process") // 로그인 진행 url
                 .defaultSuccessUrl("/", true)   // 로그인 하고 지정한 url이 없는 경우 default 페이지로 이동
                 .failureForwardUrl("/login?fail=true")  // 로그인 실패시 이동되는 url 설정
                 .permitAll()
                 .and()
             .logout()
                 .logoutSuccessUrl("/login")
-                .permitAll();
+                .permitAll()
+                ;
+
     }
 
     public PasswordEncoder passwordEncoder(){
