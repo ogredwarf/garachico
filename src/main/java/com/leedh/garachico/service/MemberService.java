@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,6 +25,7 @@ public class MemberService {
 
     /* 사용자 계정 조회 */
     public Member getMember( @NonNull String username ){
+        log.info("Log in request");
         return memberRepository.findOneByUsername(username);
     }
 
@@ -36,11 +38,11 @@ public class MemberService {
             return "이미 존재하는 계정입니다.";
         }
 
-        /* 파일 저장 */
+        /* DB 저장 */
         memberRepository.save(Member.builder()
                 .username(username)
-                .pswd(password)
-                .role("USER")
+                .pswd( new BCryptPasswordEncoder().encode(password))
+                .role("ROLE_USER")
                 .build()
         );
 
