@@ -11,14 +11,14 @@
 - 윤식당2에 나온 도시 이름으로 기억하기 편하라고 지었습니다. 
 
 ## 개발 환경
-> JAVA SDK 버전 : 1.8
-> Spring Boot:  2.0.3.RELEASE
-> DB: H2
+> * JAVA SDK 버전 : 1.8
+> * Spring Boot:  2.0.3.RELEASE
+> * DB: H2
 
 ### 설치된 라이브러리
-> jQuery : 1.12.4
-> jQuery.confirm: 3.3.0
-> google Gson : 2.8.5
+> * jQuery : 1.12.4
+> * jQuery.confirm: 3.3.0
+> * google Gson : 2.8.5
 >  
 
 ## 설치
