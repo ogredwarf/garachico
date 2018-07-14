@@ -91,13 +91,13 @@
             /*최근 검색 결과 조회*/
             getHistoryList: function () {
                 $('div.history').empty();
-                $.post('/api/getHistory')
+                $.post('/api/history/list')
                     .done(function (data) {
                         $.each( data.historyList, function(i,v){
                             $('div.history').append('<span class="srch">'+v.query+'</span>')
                         });
 
-                        /*새로 생긴 곳에 이벤트 추가 */
+                        /*이벤트 추가-클릭시 검색어 란으로 이동*/
                         $('.history .srch').off().on('click',function(e){
                             e.preventDefault();
                             $('input[name=query]').val($(this).text());

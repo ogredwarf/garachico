@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/template_default">
+<head>
+    <meta charset="UTF-8">
+    <title>북마크 리스트</title>
+</head>
+<body layout:fragment="content">
+
+<table data-th-unless="${#lists.isEmpty(bookmarkList)}">
+    <thead>
+        <tr>
+            <td>title</td>
+            <td>isbn</td>
+            <td>타이틀</td>
+        </tr>
+    </thead>
+    <colgroup>
+        <col width="*">
+        <col width="20%">
+        <col width="120px">
+    </colgroup>
+    <tbody>
+        <tr data-th-each="item:${bookmarkList}">
+            <td><span data-th-utext="${item.title}">title</span> </td>
+            <td><span data-th-utext="${item.isbn}">isbn</span> </td>
+            <td><a    data-th-href="${item.url}">바로가기</a> </td>
+        </tr>
+    </tbody>
+</table>
+<div data-th-if="${#lists.isEmpty(bookmarkList)}">
+    <h1> 북마크가 등록되어 있지 않습니다. </h1>
+</div>
+
+</body>
+</html>

@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 @Entity(name = "tlb_bookmark_m")
 @ToString
 public class BookMark {
@@ -31,6 +32,9 @@ public class BookMark {
     @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
+    private String url;
+
     @UpdateTimestamp
     private Timestamp lastModifyDt;
 
@@ -42,9 +46,10 @@ public class BookMark {
     private Member member;
 
     @Builder
-    public BookMark ( String isbn, String title, Member member) {
+    public BookMark ( String isbn, String title, String url, Member member) {
         this.isbn = isbn;
         this.title = title;
+        this.url = url;
         this.member = member;
     }
 
