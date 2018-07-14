@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout/template_default">
+<head>
+    <meta charset="UTF-8">
+    <title>에러페이지</title>
+</head>
+<body layout:fragment="content">
+
+<h1>에러페이지</h1>
+<div style="text-align: center; margin: 10px">
+    <img data-th-src="@{/images/error.jpg}">
+    <div>
+        오류가 나서 이 페이지로 이동했습니다.<p/>
+        오류 내용은... 시간과 예산을 조금 더 주신다면....
+    </div>
+
+</div>
+
+<a href="/">Go Home</a>
+</body>
+</html>

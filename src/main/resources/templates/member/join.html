@@ -4,10 +4,48 @@
       layout:decorator="layout/template_default">
 <head>
     <title>회원가입</title>
+    <script>
+        var join = {
+            /* 회원 가입 */
+            joinUser: function ( obj ) {
+                var param = $(obj).serializeObject();
+                $.post("/member/join_process", param, function (data) {
+                    console.log(data);
+                })
+                    .done(function (result) {
+                        if( result && result.status ){
+                            $.alert({
+                                title: '성공!',
+                                content: '회원 가입이 성공하였습니다.',
+                                buttons: {
+                                    okay: {
+                                        text: '로그인 페이지로 이동',
+                                        action: function () {
+                                            location.href=result.returnUrl;
+                                        }
+                                    }
+                                }
+                            });
+                        }else {
+                            $.alert({
+                                content: result.error_message
+                            });
+                        }
+                    })
+                    .fail(function () {
+                        $.alert({
+                            title: '실패!',
+                            content: '회원 가입이 실패하였습니다.'
+                        });
+                    })
+                ;
+            }
+        };
+    </script>
 </head>
 <body layout:fragment="content">
     <h1>회원가입</h1>
-    <form th:action="@{/member/join_process}" method="post">
+    <form th:action="@{/member/join_process}" method="post" onsubmit="join.joinUser( this );return false;">
         <label for="username">Username</label>:
         <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
         <label for="password">Password</label>:

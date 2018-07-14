@@ -36,4 +36,10 @@ public class IndexController {
         return "member/join";
     }
 
+    @RequestMapping("/error")
+    public String error() {
+        log.debug("join");
+        return "error/error";
+    }
+
 }

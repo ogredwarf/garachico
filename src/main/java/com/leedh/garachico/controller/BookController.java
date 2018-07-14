@@ -100,6 +100,7 @@ public class BookController {
 
     /**
      * 상세 페이지
+     * - 미리 정의된 목록 페이지를 이용해 결과 목록을 그리고 그것을 가져옴
      * - DTO로 해당 정보를 가져옴
      */
     @RequestMapping("detail")
