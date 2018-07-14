@@ -25,30 +25,35 @@ public class SearchHistoryService {
     @Autowired
     SearchHistoryRepository searchHistoryRepository;
 
-    /*최근 10건의 조회 기록 부르기*/
-    public List<SearchHistory> getLast10SearchHistoryList(Member member){
-        Sort sort = new Sort(Sort.Direction.DESC, "createDt");
-        return searchHistoryRepository.findFirst10ByMember( member, sort );
+    /**
+     * 최근 10건의 조회 기록 부르기
+     * ID 가 Sequence 로 생성 되기 때문에 ID 기준으로 처리한다.
+     */
+    public List<SearchHistory> getLast10SearchHistoryList(Member member) {
+        Sort sort = new Sort(Sort.Direction.DESC, "srchId");
+        return searchHistoryRepository.findFirst10ByMember(member, sort);
     }
 
 
     /* 히스토리 저장 */
-    public void save ( final SearchHistory history ){
+    public void save(final SearchHistory history) {
         searchHistoryRepository.save(history);
     }
 
     /* 히스토리 저장 */
-    public void save (final String query, final String sort ){
-        searchHistoryRepository.save( SearchHistory.builder().query(query).sort( sort).build());
+    public void save(final String query, final String sort, final Member member) {
+        searchHistoryRepository.save(SearchHistory.builder().query(query).sort(sort).member(member).build());
     }
 
     /* 히스토리 저장 */
-    public void save (final String query, final String sort, final String category, final String target){
-        searchHistoryRepository.save( SearchHistory.builder()
+    public void save(final String query, final String sort, final String category, final String target, final Member member) {
+
+        searchHistoryRepository.save(SearchHistory.builder()
                 .query(query)
-                .sort( sort)
+                .sort(sort)
                 .category(category)
                 .target(target)
+                .member(member)
                 .build());
     }
 

@@ -1,7 +1,11 @@
 <!--
 책검색 결과 정보 List 로 표현
+- 코딩 테스트 이므로 사용되는 Style, Script 등을 한파일에 넣어 둠
+
 -->
 <style type="text/css">
+
+    /*리스트 전체 적용*/
     table.list {
         width: 100%;
         padding: 0 5px;
@@ -24,6 +28,7 @@
         font-weight: bold;
         font-size: 1.4rem;
     }
+
     table.list .title a {
         color: black;
     }
@@ -45,6 +50,7 @@
         border-left: 1px solid #cccccc;
         list-style-type: none;
     }
+
     table.list td ul li .surfix {
         color: #333333;
         font-weight: bold;
@@ -77,14 +83,15 @@
 </style>
 <script type="text/javascript">
     $.extend(srchBook, {
-        goDetail: function (obj) {
-            console.log("url: " + obj.href);
-            console.log("title: " + $(obj).attr('alt'));
-            $.alert({
-                boxWidth: '800px',
-                title: $(obj).attr('alt'),
-                content: 'url:' + obj.href
-            });
+
+        /*
+        상세 페이지 팝업
+        */
+        popupBookDetail: function (obj) {
+
+            var row = $(obj).closest("form").serializeObject();
+            alert(JSON.stringify(row));
+
             return false;
         }
     });
@@ -95,7 +102,7 @@
         $('ul.page_area li .prev').click(function (e) {
             e.preventDefault();
             var curPageNo = parseInt($('#curPageNo').val());
-            curPageNo = curPageNo? curPageNo : 1;
+            curPageNo = curPageNo ? curPageNo : 1;
 
             if (curPageNo > 1) {
                 srchBook.goPage(curPageNo - 1);
@@ -104,13 +111,26 @@
                 $.alert("첫 페이지 입니다. ");
             }
         });
-        /*페이지 이동 관련*/
+        /*페이지 이동 관련 next */
         $('ul.page_area li .next').click(function (e) {
             e.preventDefault();
             var curPageNo = parseInt($('#curPageNo').val());
-            curPageNo = curPageNo? curPageNo : 1;
+            curPageNo = curPageNo ? curPageNo : 1;
 
             srchBook.goPage(curPageNo + 1);
+        });
+
+        $('table.list td a.goDetail').click(function (e) {
+            e.preventDefault();
+            var param = $($(this).closest("tr").find('form')[0]).serializeObject();
+            $.post(this.href, param, function(data){},'html')
+                .done(function(data){
+                    $.alert({
+                        title: param.title,
+                        content: data
+                    });
+                })
+            ;
         });
     });
 </script>
@@ -125,8 +145,9 @@
 <!--검색 결과 List-->
 <div data-th-unless="${#lists.isEmpty(result.documents)}">
     <div style="width: 100%; text-align: center">
+        <!-- 단순한 페이징 기능만 부여 -->
         <ul class="page_area">
-            <input type="hidden" id="curPageNo" data-th-value="${page}" />
+            <input type="hidden" id="curPageNo" data-th-value="${page}"/>
             <li data-th-if="${1 < page}"><span class="prev">Prev</span></li>
             <li><span class="currentPage" data-th-text="${page}"></span></li>
             <li data-th-unless="${result.meta.isEnd}"><span class="next">Next</span></li>
@@ -140,65 +161,75 @@
 
         </colgroup>
         <tbody>
-        <tr data-th-each="item : ${result.documents}">
+        <tr data-th-each="item, iterStat : ${result.documents}" data-th-attr="data-row=${iterStat.index}">
             <td>
-                <div class="thumbnail"  data-th-unless="${#strings.isEmpty(item.isbn)}">
-                    <a onclick="return srchBook.goDetail(this);"
-                       data-th-href="@{'/book/detail?bookid=' + ${#strings.substringAfter(item.url,'bookid=')}}">
+                <!--ISBN이 있는 경우에만 이미지 클릭이 되도록 Thymeleaf 를 이용해서 만듬 -->
+                <div class="thumbnail" data-th-unless="${#strings.isEmpty(item.isbn)}">
+                    <a class="goDetail" data-th-href="@{/book/detail}">
                         <img data-th-src="${item.thumbnail}"
-                             data-th-alt="${item.title}"/>
+                             data-th-alt="row_ + ${iterStat.index}"/>
                     </a>
                 </div>
-                <div class="thumbnail"  data-th-if="${#strings.isEmpty(item.isbn)}" data-th-utext="${item.title}">
-                        <img data-th-src="${item.thumbnail}"
-                             data-th-alt="${item.title}"/>
+                <div class="thumbnail" data-th-if="${#strings.isEmpty(item.isbn)}" data-th-utext="${item.title}">
+                    <img data-th-src="${item.thumbnail}"
+                         data-th-alt="row_ + ${iterStat.index}"/>
                 </div>
             </td>
             <td>
-                <div class="title" data-th-unless="${#strings.isEmpty(item.isbn)}" >
-                    <a onclick="return srchBook.goDetail(this)"
-                       data-th-href="@{'/book/detail?bookid=' + ${#strings.substringAfter(item.url,'bookid=')}}"
-                       data-th-alt="${item.title}"
-                       data-th-utext="${item.title}">
-                        Title
+                <!--ISBN이 있는 경우에만 제목 클릭이 되도록 Thymeleaf 를 이용해서 만듬 -->
+                <div class="title" data-th-unless="${#strings.isEmpty(item.isbn)}">
+                    <a class="goDetail" data-th-href="@{/book/detail}">
+                        <span data-th-utext="${item.title}" data-th-name="title">Title</span>
                     </a>
                 </div>
                 <div class="title" data-th-if="${#strings.isEmpty(item.isbn)}" data-th-utext="${item.title}">
-                        Title
+                    Title
                 </div>
                 <div class="book-summary">
                     <ul>
                         <li data-th-unless="${#lists.isEmpty(item.authors)}">
-                            <span data-th-name="authors"
-                                  data-th-text="${#strings.listJoin(item.authors, ',')}">authors</span>
+                            <span data-th-text="${#strings.listJoin(item.authors, ',')}">authors</span>
                             <span class="surfix">저</span>
                         </li>
                         <li data-th-unless="${#lists.isEmpty(item.translators)}">
-                            <span data-th-name="translators"
-                                  data-th-text="${#strings.listJoin(item.translators, ',')}">translators</span>
+                            <span data-th-text="${#strings.listJoin(item.translators, ',')}">translators</span>
                             <span class="surfix">역</span>
                         </li>
                         <li data-th-unless="${#lists.isEmpty(item.publisher)}">
-                            <span data-th-name="publisher"
-                                  data-th-text="${item.publisher}">publisher</span>
+                            <span data-th-text="${item.publisher}">publisher</span>
                             <span class="surfix">펴냄</span>
                         </li>
                     </ul>
                 </div>
                 <div style="display: block" class="price">
                     <ul>
-                        <li>정가:   <span data-th-remove="tag" data-th-text="${#numbers.formatCurrency(item.price)}">authors</span></li>
-                        <li>판매가: <span data-th-remove="tag" data-th-text="${#numbers.formatCurrency(item.salePrice)}">authors</span></li>
+                        <!-- 화폐 표시 사용 -->
+                        <li>정가: <span data-th-remove="tag"
+                                      data-th-text="${#numbers.formatCurrency(item.price)}"> 0 </span>
+                        </li>
+                        <li>판매가: <span data-th-remove="tag"
+                                       data-th-text="${#numbers.formatCurrency(item.salePrice)}"> 0 </span></li>
                     </ul>
                 </div>
-               <!-- <div style="display: block">isbn: <span data-th-text="${item.isbn}">isbn</span></div>-->
             </td>
             <td>
-                <button class="bookmark">북마크</button>
+                <form action="#" method="post" data-th-object="${item}">
+                    <input type="hidden" name="title" data-th-value="*{title}">
+                    <input type="hidden" name="authors" data-th-value="*{#strings.listJoin(authors,',')}">
+                    <input type="hidden" name="translators" data-th-value="*{#strings.listJoin(translators,',')}">
+                    <input type="hidden" name="publisher" data-th-value="*{#strings.listJoin(publisher,',')}">
+                    <input type="hidden" name="isbn" data-th-value="*{isbn}">
+                    <input type="hidden" name="datetime" data-th-value="*{datetime}">
+                    <input type="hidden" name="price" data-th-value="*{price}">
+                    <input type="hidden" name="salePrice" data-th-value="*{salePrice}">
+                    <input type="hidden" name="status" data-th-value="*{status}">
+                    <input type="hidden" name="overview" data-th-value="*{contents}">
+                    <input type="hidden" name="url" data-th-value="*{url}">
+                    <input type="hidden" name="thumbnail" data-th-value="*{thumbnail}">
+                </form>
+                <button class="bookmark">북마크 추가</button>
             </td>
         </tr>
         </tbody>
     </table>
-
-    <!--<div data-th-text="${result.meta.totalCount}"> 0 건 </div>-->
 </div>

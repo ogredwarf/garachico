@@ -24,7 +24,7 @@ public class SearchHistory {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long srchId;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String query;       /*검색어*/
 
     @Column(nullable = false)

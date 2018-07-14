@@ -69,6 +69,7 @@ public class BookDTO {
         @NoArgsConstructor
         @Builder
         public static class Document {
+            Long seq;               // row count
             String title;           //title	도서 제목	String
             String contents;        //contents	도서 소개	String
             String url;             //url	책 링크 (URL)	String

@@ -23,26 +23,43 @@
             padding: 0 12px;
         }
 
+        /*div.history{
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+        }*/
+
+        span.srch {
+            display: inline-block;
+            padding: 2px 6px;
+            margin: 2px 5px;
+            background: beige;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        span.srch:hover {
+            font-weight: bold;
+        }
     </style>
 
     <script>
         var srchBook = {};
         $.extend(srchBook, {
-            lastCondition : null,
+            lastCondition: null,
             /* 책 검색 */
-            find: function (page, param ) {
+            find: function (page, param) {
 
                 /* 조회조건이 없으면 form에서 조회조건을 가져옴*/
-                if( !param ){
+                if (!param) {
                     param = $('#search_condition').serializeObject();
                 }
 
 
                 $('#list-contents').html('');
-                param.page = page? page : 1;
+                param.page = page ? page : 1;
 
                 /* 검색어가 없는 경우 에러 메시지 출력 */
-                if( !param.query ){
+                if (!param.query) {
 
                     $.alert("검색어는 필수 입력 값입니다. 검색어를 입력하여 주세요.");
                     return false;
@@ -51,33 +68,50 @@
                 /* 최종 기록 저장 */
                 srchBook.lastCondition = param;
 
-                console.log("param : " + param )
+                console.log("param : " + param);
                 $('button.find').prop("disabled", true);
-                $.post('/book/list', param, function (data) {}, 'html')
+                $.post('/book/find', param, function (data) {
+                }, 'html')
                     .done(function (data) {
                         $('#list-contents').html(data);
                     })
                     .always(function () {
                         $('button.find').prop("disabled", false);
+                        srchBook.getHistoryList();
                     })
                 ;
             },
-            
+
             /* Page 이동 */
             goPage: function (page) {
                 console.log("goPage" + page);
-                srchBook.find(page, srchBook.lastCondition );
+                srchBook.find(page, srchBook.lastCondition);
             },
-            
-            goDetail: function ( isbn ) {
-                var param = {};
-                param.detail = isbn;
-            }
 
+            /*최근 검색 결과 조회*/
+            getHistoryList: function () {
+                $('div.history').empty();
+                $.post('/api/getHistory')
+                    .done(function (data) {
+                        $.each( data.historyList, function(i,v){
+                            $('div.history').append('<span class="srch">'+v.query+'</span>')
+                        });
+
+                        /*새로 생긴 곳에 이벤트 추가 */
+                        $('.history .srch').off().on('click',function(e){
+                            e.preventDefault();
+                            $('input[name=query]').val($(this).text());
+                            srchBook.find(1);
+                        });
+                    })
+                ;
+
+                return false;
+            }
         });
 
         $(function () {
-
+            srchBook.getHistoryList();
             /**
              * 이벤트 설정
              */
@@ -85,6 +119,8 @@
                 e.preventDefault();
                 srchBook.find(1);
             });
+
+
         });
     </script>
 </head>
@@ -100,7 +136,7 @@
             <div>
                 <label data-th-for="sort"><span>정렬순서</span></label>
                 <select data-th-name="sort">
-                    <option data-th-each="item:${T(com.leedh.garachico.enums.Sort).values()}"
+                    <option data-th-each="item:${T(com.leedh.garachico.enums.SortType).values()}"
                             data-th-value="${item.code}"
                             data-th-text="${item.desc}"
                     ></option>
@@ -124,18 +160,20 @@
                     </option>
                 </select>
             </div>
-            <div></div>
-
             <div>
-                <button class="find"> 테스트</button>
+                <label data-th-for="history"><span>최근검색</span></label>
+                <div class="history" >
+
+                </div>
+            </div>
+            <div>
+                <button class="find">검색</button>
             </div>
         </div>
-        <div id="list-contents">
-
-        </div>
     </form>
+    <div id="list-contents">
 
-
+    </div>
 </section>
-
+</body>
 </html>

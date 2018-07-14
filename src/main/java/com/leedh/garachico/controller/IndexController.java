@@ -30,14 +30,6 @@ public class IndexController {
         return "member/login";
     }
 
-/*    @RequestMapping("/login")
-    public String login(Model model,
-                        @RequestParam("fail") Boolean isLoginFail ) {
-        log.debug("login-error");
-        model.addAttribute("loginError", isLoginFail);
-        return "member/login";
-    }*/
-
     @RequestMapping("/join")
     public String join() {
         log.debug("join");

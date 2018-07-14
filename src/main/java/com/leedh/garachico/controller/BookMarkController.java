@@ -1,7 +1,8 @@
 package com.leedh.garachico.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 설명: 북마크 추가 삭제 관련
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Controller;
  * User: 이동훈
  * Date: 2018-07-13
  */
-@Controller
+@RestController
 @Slf4j
+@RequestMapping("/bookmark/")
 public class BookMarkController {
+
 }
