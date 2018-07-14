@@ -55,6 +55,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 ;
 
+        /**
+         * 중복 로그인 방지
+         */
+        http.sessionManagement()
+                .invalidSessionUrl("/login")
+                .sessionAuthenticationErrorUrl("/login")
+                .maximumSessions(1)
+                .expiredUrl("/login")
+                .maxSessionsPreventsLogin(true)
+                ;
+
     }
 
     public PasswordEncoder passwordEncoder(){
