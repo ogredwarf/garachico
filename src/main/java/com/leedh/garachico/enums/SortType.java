@@ -8,13 +8,13 @@ import java.util.Arrays;
 /**
  * 설명:
  * Project: garachico
- * CLASS: Sort
+ * CLASS: SortType
  * User: 이동훈
  * Date: 2018-07-07
  */
 @Getter
 @AllArgsConstructor
-public enum Sort {
+public enum SortType {
     ACCURACY("accuracy", "정확도"),
     RECENCY ("recency", "최신순");
 
