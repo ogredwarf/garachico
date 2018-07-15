@@ -66,7 +66,7 @@ public class KakaoApiFeignConfig {
                 .setMaxConnPerRoute(300)
                 .setMaxConnTotal(300)
                 .addInterceptorFirst((HttpRequestInterceptor) (request, context) -> {
-                    /*인증키 삽입*/
+                    /*인증키 삽입: 해당키 삽입이 필수 이다. */
                     request.addHeader("Authorization", kakaoApiKey);
                 });
 

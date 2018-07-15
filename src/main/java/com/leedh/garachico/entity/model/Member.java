@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Member table 설정
+ * 사용자 마스터 테이블
  * project: garachico
  * User: 이동훈
  * Date: 2018-07-07

@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
+ * 멤버 관리 Repository
  * MemberRepository
  * project: garachico
  * User: 이동훈

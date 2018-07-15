@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * 설명:
+ * 설명: 북마크 저장 Entity
  * Project: garachico
  * CLASS: BookMark
  * User: 이동훈

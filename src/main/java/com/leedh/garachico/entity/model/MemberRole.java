@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
 
 /**
- * 설명:
+ * 설명: 사용자 권한 설정 테이블
  * Project: garachico
  * CLASS: MemberRole
  * User: 이동훈

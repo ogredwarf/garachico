@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 설명:
+ * 설명: 최근 검색 Repository
  * Project: garachico
  * CLASS: SearchHistoryRepository
  * User: 이동훈
