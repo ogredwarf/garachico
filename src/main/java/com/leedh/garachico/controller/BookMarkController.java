@@ -35,8 +35,6 @@ public class BookMarkController {
 
     /**
      * 책 검색 결과 조회 조회 조건 추가
-     * @param model
-     * @return
      */
     @RequestMapping("list")
     public String list(Model model,
@@ -48,11 +46,13 @@ public class BookMarkController {
 
         List<BookMark> list = bookMarkService.list(loginedMember);
 
+        // 책 제목순 정렬
         if(sort.equals("title")){
             list = list.stream()
                     .sorted( Comparator.comparing(BookMark::getTitle))
                     .collect(Collectors.toList());
         }
+        // 등록 시간 순 정렬
         else {
             list = list.stream()
                     .sorted( Comparator.comparing(BookMark::getCreateDt).reversed())
