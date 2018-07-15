@@ -36,14 +36,17 @@
 </head>
 <body>
 <!--header 메뉴에서만-->
-<header data-th-replace="/menu/header.html">
-</header>
-<section layout:fragment="content">
-    <p>Layout Content</p>
-</section>
-<footer layout:fragment="footer">
-    <span style="float: right">wishadow@지메일.com</span>
-</footer>
+<div style="width: 80%;min-width: 800px;margin: auto">
+    <header data-th-replace="/menu/header.html">
+    </header>
+    <section layout:fragment="content">
+        <p>Layout Content</p>
+    </section>
+    <footer layout:fragment="footer">
+        <span style="float: right">wishadow@지메일.com</span>
+    </footer>
+</div>
+
 
 </body>
 </html>

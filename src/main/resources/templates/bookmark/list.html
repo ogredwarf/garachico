@@ -8,22 +8,22 @@
     <title>북마크 리스트</title>
 
     <style type="text/css">
-        #bookmarks {
+        table {
             font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
             border-collapse: collapse;
             width: 100%;
         }
 
-        #bookmarks td, #bookmarks th {
+        table td, table th {
             border: 1px solid #ddd;
             padding: 8px;
         }
 
-        #bookmarks tr:nth-child(even){background-color: #f2f2f2;}
+        table tr:nth-child(even){background-color: #f2f2f2;}
 
-        #bookmarks tr:hover {background-color: #ddd;}
+        table tr:hover {background-color: #ddd;}
 
-        #bookmarks th {
+        table th {
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
@@ -35,21 +35,19 @@
 </head>
 <body layout:fragment="content">
 
-<table id="bookmarks" style="width: 100%"
+<table id="bookmarks" style="width: 80%; margin: auto"
        data-th-unless="${#lists.isEmpty(bookmarkList)}" >
-    <thead>
-        <tr>
-            <td>title</td>
-            <td>isbn</td>
-            <td>기능</td>
-        </tr>
-    </thead>
     <colgroup>
         <col width="*">
         <col width="20%">
         <col width="120px">
     </colgroup>
     <tbody>
+        <tr>
+            <th>책 제목</th>
+            <th>isbn</th>
+            <th>기능</th>
+        </tr>
         <tr data-th-each="item:${bookmarkList}">
             <td><span data-th-utext="${item.title}">title</span> </td>
             <td><span data-th-utext="${item.isbn}">isbn</span> </td>
