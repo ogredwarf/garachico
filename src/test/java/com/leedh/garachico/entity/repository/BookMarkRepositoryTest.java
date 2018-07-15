@@ -40,7 +40,7 @@ public class BookMarkRepositoryTest {
         // 사용자 계정 정보 추가
         memberRepository.save(Member.builder()
                 .username("testUser")
-                .pswd( new BCryptPasswordEncoder().encode("testUserPassword"))
+                .pswd(new BCryptPasswordEncoder().encode("testUserPassword"))
                 .role("USER")   /*기본값*/
                 .build());
     }
@@ -52,29 +52,30 @@ public class BookMarkRepositoryTest {
 
         Member member = memberRepository.findOneByUsername("testUser");
 
-        assertNotNull( member );
+        assertNotNull(member);
 
-        IntStream.range(0,10).forEach( x-> {
+        IntStream.range(0, 10).forEach(x -> {
             bookMarkRepository.save(BookMark.builder()
-                                            .isbn("isbn_"+x)
-                                            .title("title_"+x)
-                                            .member(member)
-                                            .build());
+                    .isbn("isbn_" + x)
+                    .title("title_" + x)
+                    .url("https://www.kakaobank.com/")
+                    .member(member)
+                    .build());
         });
 
-        List<BookMark> listBookMark = bookMarkRepository.findAllByMember( member );
+        List<BookMark> listBookMark = bookMarkRepository.findAllByMember(member);
 
-        assertNotNull( listBookMark );
-        assertNotEquals( 0, listBookMark.size() );
+        assertNotNull(listBookMark);
+        assertNotEquals(0, listBookMark.size());
 
     }
 
     /* 테스트 이후 삭제 */
     @After
-    public void after(){
+    public void after() {
 
         bookMarkRepository.deleteAll();
-        memberRepository.deleteByUsername( "testUser");
+        memberRepository.deleteByUsername("testUser");
     }
 
 }
