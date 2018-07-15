@@ -43,7 +43,7 @@
         };
     </script>
 </head>
-<body layout:fragment="content">
+<body layout:fragment="content" style="text-align: center">
     <h1>회원가입</h1>
     <form th:action="@{/member/join_process}" method="post" onsubmit="join.joinUser( this );return false;">
         <label for="username">Username</label>:

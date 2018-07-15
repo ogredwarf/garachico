@@ -24,6 +24,24 @@
             border-radius: 2px;
 
         }
+
+        div ul.sort {
+            text-align: center;
+        }
+
+        div ul.sort li {
+            margin: 2px 5px;
+            display: inline-block;
+            list-style-type: none;
+        }
+
+        div ul.sort li a{
+            color: black;
+        }
+
+        div ul.sort li a:hover{
+            font-weight: bold;
+        }
     </style>
 
     <script type="text/javascript">
@@ -60,34 +78,47 @@
 </head>
 <body layout:fragment="content">
 <p></p>
-<table id="bookmarks" style="width: 80%; margin: auto"
-       data-th-unless="${#lists.isEmpty(bookmarkList)}" >
-    <colgroup>
-        <col width="*">
-        <col width="20%">
-        <col width="120px">
-    </colgroup>
-    <tbody>
+<div  data-th-unless="${#lists.isEmpty(bookmarkList)}" >
+    <div style="display: block">
+        <ul class="sort">
+            <li><a data-th-href="@{/bookmark/list}">[책 제목순 정렬]</a></li>
+            <li><a data-th-href="@{/bookmark/list?sort=time}">[등록일자 기준 정렬]</a></li>
+        </ul>
+    </div>
+    <table id="bookmarks" style="width: 80%; margin: auto">
+
+        <colgroup>
+            <col width="*">
+            <col width="20%">
+            <col width="120px">
+            <col width="120px">
+        </colgroup>
+        <tbody>
         <tr>
             <th>책 제목</th>
             <th>isbn</th>
             <th>기능</th>
+            <th>등록일자</th>
         </tr>
         <tr data-th-each="item:${bookmarkList}">
             <td><span data-th-utext="${item.title}">title</span> </td>
             <td><span data-th-utext="${item.isbn}">isbn</span> </td>
+            <td><span data-th-utext="${item.createDt}">isbn</span> </td>
             <td>
                 <form action="#" method="post" data-th-object="${item}">
                     <input type="hidden" name="title" data-th-value="*{title}">
                     <input type="hidden" name="isbn" data-th-value="*{isbn}">
                     <input type="hidden" name="url" data-th-value="*{url}">
+                    <input type="hidden" name="url" data-th-value="*{createDt}">
                     <a data-th-href="${item.url}">바로가기</a>
                     <button class="bookmark del">북마크 삭제</button>
                 </form>
             </td>
         </tr>
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
+
 <div data-th-if="${#lists.isEmpty(bookmarkList)}">
     <h1> 북마크가 등록되어 있지 않습니다. </h1>
 </div>
