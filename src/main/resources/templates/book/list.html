@@ -127,7 +127,6 @@
             var param = $(this).closest("form").serializeObject();
             $.post('/api/bookmark/add', param)
                 .done(function (result) {
-                    console.log(result)
                     var title = (result.isSuccess)? "성공!":"실패!!!";
                     $.alert({
                         title: title,

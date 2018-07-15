@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class BookMarkService {
     /**
      * 북마크 추가
      */
+    @Transactional
     public Boolean add(@NonNull final String isbn,
                        @NonNull final String title,
                        @NonNull final String url,
@@ -45,6 +47,21 @@ public class BookMarkService {
                 .member(member)
                 .build()
         );
+        return true;
+    }
+
+    @Transactional
+    public Boolean remove(@NonNull final String isbn,
+                       @NonNull final String title,
+                       @NonNull final String url,
+                       @NonNull final Member member) {
+        log.info("북마크 삭제 ");
+
+        if (!bookMarkRepository.existsByMemberAndIsbn(member, isbn)) {
+            log.info("해당하는 북마크가 없습니다.");
+            return false;
+        }
+        bookMarkRepository.deleteAllByMemberAndIsbn( member, isbn );
         return true;
     }
 

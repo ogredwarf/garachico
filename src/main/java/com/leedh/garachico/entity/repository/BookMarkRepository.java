@@ -18,7 +18,12 @@ import java.util.List;
 public interface BookMarkRepository extends JpaRepository<BookMark, Long > {
 
     /*북마크 여부 확인*/
-    Boolean existsByMemberAndIsbn( Member member, String isbn);
+    Boolean existsByMemberAndIsbn( Member member, final String isbn);
+
     /* 사용자 별로 즐겨찾기 정보 조회 */
     List<BookMark> findAllByMember(Member member);
+
+    /*삭제*/
+    void deleteAllByMemberAndIsbn(Member member, final String isbn);
+
 }

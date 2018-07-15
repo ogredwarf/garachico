@@ -60,6 +60,9 @@ public class BookApiController {
         return result;
     }
 
+    /**
+     * 북마크 추가
+     */
     @PostMapping("/bookmark/add")
     public HashMap<String, Object> addBookMark(Model model,
                               @RequestParam("isbn") final String    isbn,
@@ -81,6 +84,35 @@ public class BookApiController {
             result.put("message", "북마크 추가에 성공하였습니다.");
         } else {
             result.put("message", "이미 등록된 북마크 입니다.");
+        }
+
+        return result;
+    }
+
+    /**
+     * 북마크 삭제
+     */
+    @PostMapping("/bookmark/del")
+    public HashMap<String, Object> removeBookMark(Model model,
+                                               @RequestParam("isbn") final String    isbn,
+                                               @RequestParam("title") final String   title,
+                                               @RequestParam("url") final String     url
+    ) {
+
+        HashMap<String, Object> result = new HashMap<>();
+        Boolean isSuccess = false;
+
+        // 로그인 사용자 조회
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Member loginedMember = ((LoginUserDetails) auth.getPrincipal()).getMember();
+
+        isSuccess = bookMarkService.remove( isbn, title, url, loginedMember );
+        result.put("isSuccess", isSuccess);
+
+        if(isSuccess){
+            result.put("message", "북마크 제거에 성공하였습니다.");
+        } else {
+            result.put("message", "해당하는 북마크 정보가 없습니다.");
         }
 
         return result;

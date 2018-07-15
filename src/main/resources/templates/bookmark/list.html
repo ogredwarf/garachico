@@ -8,33 +8,58 @@
     <title>북마크 리스트</title>
 
     <style type="text/css">
-        table {
-            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
+        table button,
+        table a {
+            width: 100px;
+            text-align: center;
+            display: inline-block;
+            color: black;
+            padding: 2px 20px;
+            margin: 8px 0;
+            border: 1px solid #cccccc;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: #f3f3f3;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.35);
+            border-radius: 2px;
 
-        table td, table th {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        table tr:nth-child(even){background-color: #f2f2f2;}
-
-        table tr:hover {background-color: #ddd;}
-
-        table th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #4CAF50;
-            color: white;
         }
     </style>
 
+    <script type="text/javascript">
+        $(function () {
+            /* 북마크 제거 */
+            $("#bookmarks button.bookmark.del").click( function (e) {
+                e.preventDefault();
+                var param = $(this).closest("form").serializeObject();
+                console.log(param);
+                $.post('/api/bookmark/del', param)
+                    .done(function (result) {
+                        var title = (result.isSuccess)? "성공!":"실패!!!";
+                        $.alert({
+                            title: title,
+                            content: result.message,
+                            buttons: {
+                                okay: {
+                                    text: '새로고침',
+                                    action: function () {
+                                        location.href='/bookmark/list';
+                                    }
+                                }
+                            }
+                        });
+                    })
+                    .fail(function () {
+                        $.alert( "북마크 삭제에 실패하였습니다.")
+                    });
+
+            });
+        })
+    </script>
+
 </head>
 <body layout:fragment="content">
-
+<p></p>
 <table id="bookmarks" style="width: 80%; margin: auto"
        data-th-unless="${#lists.isEmpty(bookmarkList)}" >
     <colgroup>
@@ -52,8 +77,13 @@
             <td><span data-th-utext="${item.title}">title</span> </td>
             <td><span data-th-utext="${item.isbn}">isbn</span> </td>
             <td>
-                <a data-th-href="${item.url}">바로가기</a>
-                <div>북마크 삭제</div>
+                <form action="#" method="post" data-th-object="${item}">
+                    <input type="hidden" name="title" data-th-value="*{title}">
+                    <input type="hidden" name="isbn" data-th-value="*{isbn}">
+                    <input type="hidden" name="url" data-th-value="*{url}">
+                    <a data-th-href="${item.url}">바로가기</a>
+                    <button class="bookmark del">북마크 삭제</button>
+                </form>
             </td>
         </tr>
     </tbody>
