@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.Arrays;
 
 /**
- * 설명:
+ * 설명: 책검색 조건 범위
  * Project: garachico
  * CLASS: Target
  * User: 이동훈

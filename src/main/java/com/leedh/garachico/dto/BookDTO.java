@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * 설명: BookDTO
+ * 카카오 API에 사용하는 파라미터 및 결과 정보를 Parameter 형태로 처리함
  * Project: garachico
  * CLASS: BookDTO
  * User: 이동훈

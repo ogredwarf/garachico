@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 설명:
+ * 설명: 북마크 관련 AJAX 추가
  * Project: garachico
  * CLASS: BookApiController
  * User: 이동훈

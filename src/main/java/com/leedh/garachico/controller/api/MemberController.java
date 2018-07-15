@@ -28,40 +28,7 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-    /*member/login_process*/
-
-
-/*    @RequestMapping("/join_process")
-    String join( Model model,
-                 @RequestParam("username") @NonNull final String username,
-                 @RequestParam("password") @NonNull final String password
-    ){
-        Boolean status = false;
-        String message = StringUtils.EMPTY;
-
-        log.debug("join user : {} {}", username, password);
-
-        if(StringUtils.isBlank(username)){
-            message = "username 를 다시 입력 바랍니다.";
-        }
-        else if(StringUtils.isBlank(password)){
-            message = "password 를 다시 입력 바랍니다.";
-        }
-        else {
-
-            message = memberService.joinMember( username, password);
-            if( StringUtils.isBlank(message)) status = true;
-        }
-
-        log.debug("result : {} {}", status, message);
-
-        model.addAttribute("status", status);
-        model.addAttribute("error_message", message);
-
-        return status? "redirect:/login" : "redirect:/join";
-    }*/
-
-    @PostMapping("/join_process")
+      @PostMapping("/join_process")
     public HashMap<String, Object> join(Model model,
                                            @RequestParam("username") @NonNull final String username,
                                            @RequestParam("password") @NonNull final String password
@@ -79,6 +46,11 @@ public class MemberController {
             message = "password 를 다시 입력 바랍니다.";
         }
         else {
+
+            /*
+            - 보안을 위해 ID 및 PASSWRORD 검증이 필요하다.
+            - 예를 들어 길이 몇 이상, 특수문자, 대소문자 및 숫자 포함여부
+            */
 
             message = memberService.joinMember( username, password);
             if( StringUtils.isBlank(message)) status = true;

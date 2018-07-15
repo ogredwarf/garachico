@@ -23,7 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.stream.IntStream;
 
 /**
- * 설명:
+ * 설명: 책 검색 관련 컨트롤러
+ *
  * Project: garachico
  * CLASS: BookController
  * User: 이동훈
@@ -64,6 +65,10 @@ public class BookController {
         log.debug("page = {}", pageNo);
         log.debug("size = {}", pageSize);
         log.debug(StringUtils.repeat("-", 30).concat("\n"));
+
+        /**
+         * 적합한 조건인지 vaild 검사하는 요건 필요함
+         */
 
         // 카카오 API를 이용해서 책 검색
         BookDTO.Res result = kakaoBookApiService.findBook(query, sort, category, target, pageNo, pageSize );

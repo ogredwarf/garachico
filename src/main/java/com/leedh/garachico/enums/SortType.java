@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.Arrays;
 
 /**
- * 설명:
+ * 설명: 책 검색 조건 정확도/최신순 정렬 순서
  * Project: garachico
  * CLASS: SortType
  * User: 이동훈

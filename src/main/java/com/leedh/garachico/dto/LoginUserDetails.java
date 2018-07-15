@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.security.core.userdetails.User;
 
 /**
- * 설명:
+ * 설명: 로그인에 사용하는 DTO를 올림
  * Project: garachico
  * CLASS: LoginUserDetails
  * User: 이동훈

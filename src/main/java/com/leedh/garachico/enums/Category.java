@@ -7,7 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import java.util.Arrays;
 
 /**
- * 설명:
+ * 설명: 검색 조회 책검색 기능 구현
  * Project: garachico
  * CLASS: Category
  * User: 이동훈

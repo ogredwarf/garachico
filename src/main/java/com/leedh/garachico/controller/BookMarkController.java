@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 /**
- * 설명: 북마크 추가 삭제 관련
+ * 설명: 북마크 조회, 추가 삭제 관련
  * Project: garachico
  * CLASS: BookMarkController
  * User: 이동훈
