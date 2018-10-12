@@ -62,7 +62,7 @@ $ gradle bootRun
 - 자바스크립트 스타일 공통 코드화 
 
 
-결론..
+결론
 ---
 ![시간과 예산](src/main/resources/static/images/error.jpg)
 - 시간과 예산을 조금만 더 주신다면...
